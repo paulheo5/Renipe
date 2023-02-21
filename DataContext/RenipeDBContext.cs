@@ -10,7 +10,7 @@ namespace Renipe.DataContext
         {
         }
  
-        public DbSet<PropertyModel> PropertyRecipe { get; set; }
+        public DbSet<SavedRecipe> Recipes { get; set; }
         public DbSet<Meal> NutritionData { get; set; }
 
     }
