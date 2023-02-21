@@ -57,9 +57,7 @@ export default class App extends Component {
   render() {
       return (
           <><Layout>
-              <h1>Table</h1>
               <Routes>
-                  
                   {AppRoutes.map((route, index) => {
                       const { element, ...rest } = route;
                       return <Route key={index} {...rest} element={element} />;
