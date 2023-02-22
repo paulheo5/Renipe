@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Cards from './components/Cards';
+import Cards from '../components/Cards';
+import HeroSection from '../components/HeroSection';
 
 export class Home extends Component {
   static displayName = Home.name;
@@ -7,7 +8,8 @@ export class Home extends Component {
   render() {
     return (
       <div>
-        <h1>Hello, Reniper</h1>
+           
+            <HeroSection/>
             <Cards />
         </div>
     );
