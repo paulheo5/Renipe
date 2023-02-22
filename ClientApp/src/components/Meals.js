@@ -1,5 +1,6 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { getMeals } from '../services/Meals';
+import {Link} from 'react-router-dom';
 
 const Meals = () => {
     const [meals, setMeals] = useState([]);
@@ -11,8 +12,9 @@ const Meals = () => {
         .catch(err => console.log(err.response))
     }
 
-    retrieveMeals();
+    
 
+    retrieveMeals();
 
     return (
         <>
@@ -52,6 +54,7 @@ const Meals = () => {
                     )
                 })}
             </table>
+            <Link to='/AddMeal'><button className='btn btn-success'>Create</button></Link>
         </>
         )
 
