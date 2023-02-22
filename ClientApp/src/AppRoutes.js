@@ -2,6 +2,7 @@ import { Counter } from "./components/Counter";
 import { FetchData } from "./components/FetchData";
 import { Home }  from "./components/Home";
 import Meals from "./components/Meals";
+import AddMeal from "./components/AddMeal";
 
 
 const AppRoutes = [
@@ -20,7 +21,10 @@ const AppRoutes = [
     {
     path: '/Meals',
     element: <Meals />
-    }
+    },
+    {path: '/AddMeal',
+    element: <AddMeal />
+  }
 
 ];
 
