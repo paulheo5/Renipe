@@ -9,7 +9,8 @@ export class Home extends Component {
     return (
       <div>
            
-            <HeroSection/>
+            <HeroSection />
+            <h1>Your tracked meals</h1>
             <Cards />
         </div>
     );
