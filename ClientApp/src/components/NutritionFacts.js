@@ -1,5 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { trackMeal } from '../services/Meals'
 
 const NutritionFacts = ({style, food}) => {
 
@@ -37,6 +39,15 @@ const NutritionFacts = ({style, food}) => {
             "Servings" : e.target.value
         })
     }
+
+    const navigate = useNavigate()
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        trackMeal(meal)
+        .then(navigate('/meals'))
+        .catch(err => console.log(err.response))
+    }
     
   return (
     <tbody>
@@ -55,7 +66,7 @@ const NutritionFacts = ({style, food}) => {
     </tr>
     <tr hidden={hide}>
         <td colSpan={9}>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <input id="FoodName" name="FoodName" type="hidden" value={meal.FoodName} />
                 <input id="CaloriesPerServing" name="CaloriesPerServing" type="hidden" value={meal.CaloriesPerServing} />
                 <input id="CarbohydratesPerServing" name="CarbohydratesPerServing" type="hidden" value={meal.CarbohydratesPerServing} />

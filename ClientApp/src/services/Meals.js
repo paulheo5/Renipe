@@ -1,3 +1,7 @@
 ﻿import axios from 'axios';
 
-export const getMeals = () => axios.get(`https://localhost:7239/api/meals`);
+const baseurl = `https://localhost:7239/api/meals`
+
+export const getMeals = () => axios.get(baseurl);
+export const getMealById = (id) => axios.get(baseurl + `${id}`)
+export const trackMeal = (meal) => axios.post(baseurl, meal)
