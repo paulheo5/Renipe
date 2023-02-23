@@ -3,6 +3,7 @@ import { FetchData } from "./components/FetchData";
 import { Home }  from "./components/Home";
 import Meals from "./components/Meals";
 import AddMeal from "./components/AddMeal";
+import SearchRecipe from "./components/SearchRecipe";
 
 
 const AppRoutes = [
@@ -24,7 +25,11 @@ const AppRoutes = [
     },
     {path: '/AddMeal',
     element: <AddMeal />
-  }
+    },
+    {
+        path: '/SearchRecipe',
+        element: <SearchRecipe/>
+    }
 
 ];
 
