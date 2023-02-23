@@ -5,6 +5,7 @@ import './HeroSection.css';
 
 function HeroSection() {
     const [show, setShow] = useState(false)
+
   return (
       <div className='hero-container'>
           
