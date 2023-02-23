@@ -12,7 +12,7 @@ const AddMeal = () => {
     const handleSearch = (e) => {
         setSearchTerm(e.target.value)
     }
-    const style = {"padding":"3px", "padding-left":"10px", "padding-right":"10px"}
+    const style = {"padding":"3px", "paddingLeft":"10px", "paddingRight":"10px"}
 
     const search = (e) => {
         e.preventDefault()
@@ -34,6 +34,7 @@ const AddMeal = () => {
         const potassium = 1092
         const sodium = 1093
 
+        const Id = food.fdcId;
         const FoodName = food.description;
         let CaloriesPerServing = (food.foodNutrients.filter(nutrient => nutrient.nutrientId === calories)[0]?.value) ?? -1
         const CarbohydratesPerServing = (food.foodNutrients.filter(nutrient => nutrient.nutrientId === carbs)[0]?.value) ?? 0
@@ -49,6 +50,7 @@ const AddMeal = () => {
 
 
         return({
+            "Id" : Id,
             "FoodName" : FoodName,
             "CaloriesPerServing" : CaloriesPerServing,
             "CarbohydratesPerServing": CarbohydratesPerServing,
@@ -69,6 +71,7 @@ const AddMeal = () => {
         <br />
         <br />
         <table className='table'>
+            <thead>
             <tr style={style} className='bg-dark'>
                 <th style={style} className='text-light'>Name</th>
                 <th style={style} className='text-light'>Calories</th>
@@ -80,15 +83,15 @@ const AddMeal = () => {
                 <th style={style} className='text-light'>Sodium</th>
                 <th></th>
             </tr>
-        {results.map( food =>{
+            </thead>
+        {results.map(food =>{
             return(
-                <>
+                <React.Fragment key={food.Id}>
                     <NutritionFacts food={food} style={style} />
-                </>
+                </React.Fragment>
             )
         })}
         </table>
-
     </div>
   )
 
