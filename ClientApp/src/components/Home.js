@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Cards from '../components/Cards';
 import HeroSection from '../components/HeroSection';
+import Footer from '../components/Footer';
 
 export class Home extends Component {
   static displayName = Home.name;
@@ -10,8 +11,8 @@ export class Home extends Component {
       <div>
            
             <HeroSection />
-            <h1>Your tracked meals</h1>
             <Cards />
+            <Footer/>
         </div>
     );
   }
