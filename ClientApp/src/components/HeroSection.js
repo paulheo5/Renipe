@@ -4,7 +4,8 @@ import { Button } from './Button';
 import './HeroSection.css';
 
 function HeroSection() {
-    const [show, setShow] = useState(false)
+    //const [show, setShow] = useState(false)
+    const searchBox = document.querySelector(".search-box");
 
   return (
       <div className='hero-container'>
@@ -17,7 +18,7 @@ function HeroSection() {
           className='btns'
           buttonStyle='btn--outline'
           buttonSize='btn--large'
-          onClick={()=> setShow(!show)}
+          onClick={()=> searchBox.classList.add("active")}
         >
           Track a meal
         </Button>
@@ -25,15 +26,15 @@ function HeroSection() {
           className='btns'
           buttonStyle='btn--primary'
           buttonSize='btn--large'
-          onClick={() => setShow(!show)}
+          //onClick={() => setShow(!show)}
         >
           Start cooking <i className='far fa-play-circle' />
               </Button>
         
           </div>
-          <div>{
-              show ? <p><input placeholder="Enter:" /></p> : null
-                }
+          <div className='search-box'>
+              <input type= "text" placeholder="Enter..."/>
+              
           </div>
     </div>
   );
