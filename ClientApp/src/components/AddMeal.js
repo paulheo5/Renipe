@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import { searchFdc } from '../services/Fdc'
+import NutritionFacts from './NutritionFacts'
 
 const AddMeal = () => {
 
@@ -11,6 +12,7 @@ const AddMeal = () => {
     const handleSearch = (e) => {
         setSearchTerm(e.target.value)
     }
+    const style = {"padding":"3px", "padding-left":"10px", "padding-right":"10px"}
 
     const search = (e) => {
         e.preventDefault()
@@ -64,33 +66,25 @@ const AddMeal = () => {
             <input id='search' type='search' placeholder='Meal Search' onChange={handleSearch}></input>
             <button type='submit'>Search</button>
         </form>
-        {/* {JSON.stringify(results)} */}
         <br />
         <br />
         <table className='table'>
-            <tr className='bg-dark'>
-            <th className='text-light'>Name</th>
-            <th className='text-light'>Calories</th>
-            <th className='text-light'>Carbohydrates</th>
-            <th className='text-light'>Protein</th>
-            <th className='text-light'>Fat</th>
-            <th className='text-light'>Phosphorus</th>
-            <th className='text-light'>Potassium</th>
-            <th className='text-light'>Sodium</th>
+            <tr style={style} className='bg-dark'>
+                <th style={style} className='text-light'>Name</th>
+                <th style={style} className='text-light'>Calories</th>
+                <th style={style} className='text-light'>Carbohydrates</th>
+                <th style={style} className='text-light'>Protein</th>
+                <th style={style} className='text-light'>Fat</th>
+                <th style={style} className='text-light'>Phosphorus</th>
+                <th style={style} className='text-light'>Potassium</th>
+                <th style={style} className='text-light'>Sodium</th>
+                <th></th>
             </tr>
         {results.map( food =>{
             return(
-                <tr>
-                    <td>{food.FoodName}</td>
-                    <td>{food.CaloriesPerServing}</td>
-                    <td>{food.CarbohydratesPerServing}</td>
-                    <td>{food.ProteinPerServing}</td>
-                    <td>{food.FatPerServing}</td>
-                    <td>{food.PhosphorusPerServing}</td>
-                    <td>{food.PotassiumPerServing}</td>
-                    <td>{food.SodiumPerServing}</td>
-                    </tr>
-                
+                <>
+                    <NutritionFacts food={food} style={style} />
+                </>
             )
         })}
         </table>
