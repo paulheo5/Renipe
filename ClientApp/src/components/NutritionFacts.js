@@ -1,34 +1,28 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 
-const NutritionFacts = (props) => {
-
-    const {style} = props
+const NutritionFacts = ({style, food}) => {
 
     const [hide, setHide] = useState(true)
-
-    const [food, setFood] = useState(props.food)
-
-    useEffect(() => {
-        setFood(props.food)
-    }, [props.food])
     
-
     const initialValues = {
-        "FoodName" : food.FoodName,
-        "CaloriesPerServing" : Math.round(food.CaloriesPerServing / (food.Servings ?? 1)),
-        "CarbohydratesPerServing" : Math.round(food.CarbohydratesPerServing / (food.Servings ?? 1)),
-        "ProteinPerServing" : Math.round(food.ProteinPerServing / (food.Servings ?? 1)),
-        "FatPerServing" : Math.round(food.FatPerServing / (food.Servings ?? 1)),
-        "PhosphorusPerServing" : Math.round(food.PhosphorusPerServing / (food.Servings ?? 1)),
-        "PotassiumPerServing" : Math.round(food.PotassiumPerServing / (food.Servings ?? 1)),
-        "SodiumPerServing" : Math.round(food.SodiumPerServing / (food.Servings ?? 1)),
-        "Date" : food.Date ?? Date.now,
-        "Servings" : food.Servings ?? 1
-    }
+            "FoodName" : food.FoodName,
+            "CaloriesPerServing" : Math.round(food.CaloriesPerServing / (food.Servings ?? 1)),
+            "CarbohydratesPerServing" : Math.round(food.CarbohydratesPerServing / (food.Servings ?? 1)),
+            "ProteinPerServing" : Math.round(food.ProteinPerServing / (food.Servings ?? 1)),
+            "FatPerServing" : Math.round(food.FatPerServing / (food.Servings ?? 1)),
+            "PhosphorusPerServing" : Math.round(food.PhosphorusPerServing / (food.Servings ?? 1)),
+            "PotassiumPerServing" : Math.round(food.PotassiumPerServing / (food.Servings ?? 1)),
+            "SodiumPerServing" : Math.round(food.SodiumPerServing / (food.Servings ?? 1)),
+            "Date" : food.Date ?? Date(Date.now),
+            "Servings" : food.Servings ?? 1
+    }    
     
-
     const [meal, setMeal] = useState(initialValues)
+    
+    useEffect(() => {
+        setMeal(initialValues)
+    }, [food])
 
     const updateValues = (e) =>{
         setMeal({
@@ -45,7 +39,7 @@ const NutritionFacts = (props) => {
     }
     
   return (
-    <>
+    <tbody>
     <tr>
         <td style={style}>{meal.FoodName}</td>
         <td style={style}>{meal.CaloriesPerServing}</td>
@@ -81,8 +75,7 @@ const NutritionFacts = (props) => {
             </form>
         </td>
     </tr>
-
-    </>
+    </tbody>
   )
 }
 
