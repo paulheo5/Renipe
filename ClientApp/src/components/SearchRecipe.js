@@ -16,22 +16,43 @@ const SearchRecipe = () => {
         e.preventDefault()
         searchSpoon(searchTerm)
             .then(res => {
-                console.log(res)
+                setResults(res)
+                
          })
 
-            .catch(err => console.log(err.response))
-    }
 
+            .catch(err => console.log(err.response))
+    }//const showRecipe = (recipe) => {
+    //    const name = recipe.title;
+    //    return ({
+    //        "title": title
+    //        })
+    //}
+    //useEffect(() => {
+    //    search();
+    //}, []);
 
 
 
     return (
+        <>
         <div>
             <form onSubmit={search}>
                 <input id='search' type='search' placeholder='Enter ingredients' onChange={handleSearch}></input>
                 <button type='submit'>Search</button>
             </form>
-        </div>
+            </div>
+            <h1>{setResults.title}</h1>
+            <div>
+                {results.length > 0 && (
+                    <ul>
+                        {results.map(result => (
+                            <li key={result.id}>{result.title}</li>
+                        ))}
+                    </ul>
+                )}
+            </div>
+        </>
         );
 
 }

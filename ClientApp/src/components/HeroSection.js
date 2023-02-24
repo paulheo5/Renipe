@@ -18,7 +18,7 @@ function HeroSection() {
           className='btns'
           buttonStyle='btn--outline'
           buttonSize='btn--large'
-          onClick={()=> searchBox.classList.add("active")}
+          onClick={()=> input}
         >
           Track a meal
         </Button>
