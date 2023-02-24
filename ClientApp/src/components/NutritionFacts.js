@@ -94,7 +94,6 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
         <td style={style} className={food.sodiumPerServing > 220 ? "text-danger" : ""}>{Math.round(meal.sodiumPerServing * meal.servings)}</td>
         <td style={style}>{meal.servingSize}</td>
         <td style={style}>{meal.servingSizeUnit}</td>
-        <td>{meal.test}</td>
             {mealView ? <>
                 <td style={style}>{meal.servings}</td>
                 <td style={style}>{meal.date}</td>
@@ -120,12 +119,20 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
                 <input id="phosphorusPerServing" name="phosphorusPerServing" type="hidden" value={meal.phosphorusPerServing} />
                 <input id="potassiumPerServing" name="potassiumPerServing" type="hidden" value={meal.potassiumPerServing} />
                 <input id="sodiumPerServing" name="sodiumPerServing" type="hidden" value={meal.sodiumPerServing} />
-                <label htmlFor="date" className="col-sm-1">Date: </label>
-                <input className="input-control" id="date" name="date" type="date" value={meal.date} onInput={(e) => setMeal({...meal, "date":e.target.value})} />
+                <div className='row'>
+                    <div className='col col-sm-3'>
+                        <label htmlFor="date" className="col-sm-1">Date: </label>
+                        <input className="form-control" id="date" name="date" type="date" value={meal.date} onInput={(e) => setMeal({...meal, "date":e.target.value})} />
+                    </div>
+                </div>
                 <br />
-                <label htmlFor="servings" className="col-sm-1">Servings: </label>
-                <input className="input-control" id="servings" name="servings" type="range" min={.25} max={5} step={.25} defaultValue={meal.servings} onInput={updateValues} />
-                <label htmlFor='servings value' style={{"marginLeft":"1em"}}>{meal.servings}</label>
+                <div className='row'>
+                    <div className='col col-sm-3'>
+                        <label htmlFor="servings">Servings: </label>
+                        <label htmlFor='servings value' style={{"marginLeft":"1em"}}>{meal.servings}</label>
+                        <input className="form-control" id="servings" name="servings" type="range" min={.25} max={5} step={.25} defaultValue={meal.servings} onInput={updateValues} />
+                    </div>
+                </div>
                 <br />
                 <button type="submit" className='btn btn-success'>Track</button>
             </form>

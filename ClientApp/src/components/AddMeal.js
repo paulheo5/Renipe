@@ -71,8 +71,7 @@ const AddMeal = () => {
   return (
     <div>
         <form onSubmit={search}>
-            <input id='search' type='search' placeholder='Meal Search' onChange={handleSearch}></input>
-            <button type='submit'>Search</button>
+            <input id='search' className='form-control' type='search' placeholder='Meal Search' onChange={handleSearch}></input>
         </form>
         <br />
         <br />
