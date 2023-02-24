@@ -3,12 +3,15 @@ import { useState } from 'react'
 import { searchSpoon } from '../services/Spoonacular'
 import './Cards.css';
 import CardItem from '../components/CardItem';
+import { useNavigate } from 'react-router-dom'
 
 const SearchRecipe = () => {
 
     const [searchTerm, setSearchTerm] = useState()
 
     const [results, setResults] = useState([])
+
+    const navigate = useNavigate();
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value)
@@ -25,16 +28,24 @@ const SearchRecipe = () => {
 
 
             .catch(err => console.log(err.response))
-    }//const showRecipe = (recipe) => {
-    //    const name = recipe.title;
-    //    return ({
-    //        "title": title
-    //        })
-    //}
+    }
     //useEffect(() => {
     //    search();
     //}, []);
 
+//    React.useEffect(() => {
+//    console.log("Side Effect")
+//    window.localStorage.setItem("name", name)
+//}, [name]);
+
+   
+    const handleClick = (e) => {
+        //alert(JSON.stringify(e));
+        console.log(e);
+        
+        window.localStorage.setItem("id", id);
+        navigate("/RecipeInfo");
+    }
 
 
     return (
@@ -50,12 +61,11 @@ const SearchRecipe = () => {
 
 
                   
-                    {results.map(result => (
-                        <React.Fragment key={result.id}>
+                {results.map(result => (
+                    <span key={result.id}>
                             <div className='cards'>
 
-                               
-                                            <CardItem 
+                            <CardItem id={result.id}
                                                 src={result.image}
                                                 text={result.title}
 
@@ -63,7 +73,7 @@ const SearchRecipe = () => {
                                             />
                             
                                 </div>
-                    </React.Fragment>
+                    </span>
                             
                             
                             
