@@ -16,7 +16,8 @@ const SearchRecipe = () => {
         e.preventDefault()
         searchSpoon(searchTerm)
             .then(res => {
-                setResults(res)
+                setResults(res.data);
+                console.log(res);
                 
          })
 
@@ -42,15 +43,22 @@ const SearchRecipe = () => {
                 <button type='submit'>Search</button>
             </form>
             </div>
-            <h1>{setResults.title}</h1>
+         
             <div>
-                {results.length > 0 && (
-                    <ul>
-                        {results.map(result => (
-                            <li key={result.id}>{result.title}</li>
+
+
+                  
+                    {results.map(result => (
+                    <React.Fragment key={result.id}>
+                            <p>{result.title}</p>
+                            <img src={result.image } ></img>
+                    </React.Fragment>
+                            
+                            
+                            
                         ))}
-                    </ul>
-                )}
+       
+                
             </div>
         </>
         );
