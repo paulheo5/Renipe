@@ -29,10 +29,7 @@ const Meals = () => {
             <table className="table">
                 <thead>
                 <tr>
-                    {/* <th style={style}>Id</th> */}
                     <th style={style}>Name</th>
-                    {/* <th style={style}>Serving Size</th>
-                    <th style={style}>Serving Size Unit</th> */}
                     <th style={style}>Calories</th>
                     <th style={style}>Carbohydrates</th>
                     <th style={style}>Protein</th>
