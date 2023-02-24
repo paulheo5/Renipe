@@ -97,7 +97,8 @@ const AddMeal = () => {
             "potassiumPerServing" : potassiumPerServing,
             "sodiumPerServing" : sodiumPerServing,
             "servingSize" : fullServingSize,
-            "servingSizeUnit" : servingSizeHousehold
+            "servingSizeUnit" : servingSizeHousehold,
+            "date" : new Date()
         })
     }
 
@@ -117,7 +118,7 @@ const AddMeal = () => {
 </span>)
 
   return (
-    <div>
+      <div>
         <form onSubmit={search}>
             <input id='search' className='form-control' type='search' placeholder='Meal Search' onChange={handleSearch} />
         </form>
