@@ -1,17 +1,19 @@
 ﻿import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { recipeInfo } from '../services/Spoonacular'
-import SearchRecipe from '../components/SearchRecipe'
+
 
 const RecipeInfo = () => {
-    const [info, setInfo] = useState([]);
+    const [info, setInfo] = useState({});
     //const recipe = SearchRecipe();
     //var id = recipe.state.id;
     const recipeid = window.localStorage.getItem("id");
 
     const retrieveMeals = (id) => {
         recipeInfo(id).then(res => {
-                console.log(res.data)
+            setInfo(res.data);
+            console.log(res.data);
+            
             })
             .catch(err => console.log(err.response))
     }
@@ -21,9 +23,20 @@ const RecipeInfo = () => {
         retrieveMeals(recipeid)
     }, [])
     return (
+        <>
+            <img src={info.image }/>
         <div>
-            {recipeid}
-        </div>
+            {/*{JSON.stringify(info)}*/}
+            {info.title}
+            {/*{info.map(infos => {*/}
+            {/*    <div>{infos.title}</div>*/}
+
+            {/*    })}*/}
+         
+
+
+            </div>
+        </>
 
         )
 }

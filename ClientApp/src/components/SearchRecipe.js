@@ -11,7 +11,7 @@ const SearchRecipe = () => {
 
     const [results, setResults] = useState([])
 
-    const navigate = useNavigate();
+
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value)
@@ -37,15 +37,6 @@ const SearchRecipe = () => {
 //    console.log("Side Effect")
 //    window.localStorage.setItem("name", name)
 //}, [name]);
-
-   
-    const handleClick = (e) => {
-        //alert(JSON.stringify(e));
-        console.log(e);
-        
-        window.localStorage.setItem("id", id);
-        navigate("/RecipeInfo");
-    }
 
 
     return (
