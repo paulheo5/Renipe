@@ -35,6 +35,7 @@ const AddMeal = () => {
         const potassium = 1092
         const sodium = 1093
 
+     
         const id = food.fdcId;
         const foodName = food.description;
         let caloriesPerServing = (food.foodNutrients.filter(nutrient => nutrient.nutrientId === calories)[0]?.value) ?? -1
