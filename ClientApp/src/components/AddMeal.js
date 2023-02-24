@@ -45,6 +45,10 @@ const AddMeal = () => {
         const phosphorusPerServing = (food.foodNutrients.filter(nutrient => nutrient.nutrientId === phosphorus)[0]?.value) ?? 0
         const potassiumPerServing = (food.foodNutrients.filter(nutrient => nutrient.nutrientId === potassium)[0]?.value) ?? 0
         const sodiumPerServing = (food.foodNutrients.filter(nutrient => nutrient.nutrientId === sodium)[0]?.value) ?? 0
+        const servingSize = food.servingSize ?? ""
+        const servingSizeUnit = food.servingSizeUnit ?? ""
+        const fullServingSize = servingSize + servingSizeUnit
+        const servingSizeHousehold = food.householdServingFullText
 
         if(caloriesPerServing === -1){
             caloriesPerServing = Math.round((4 * carbohydratesPerServing + proteinPerServing) + (9 * fatPerServing))
@@ -59,15 +63,16 @@ const AddMeal = () => {
             "fatPerServing" : fatPerServing,
             "phosphorusPerServing" : phosphorusPerServing,
             "potassiumPerServing" : potassiumPerServing,
-            "sodiumPerServing" : sodiumPerServing
+            "sodiumPerServing" : sodiumPerServing,
+            "servingSize" : fullServingSize,
+            "servingSizeUnit" : servingSizeHousehold
         })
     }
 
   return (
     <div>
         <form onSubmit={search}>
-            <input id='search' type='search' placeholder='Meal Search' onChange={handleSearch}></input>
-            <button type='submit'>Search</button>
+            <input id='search' className='form-control' type='search' placeholder='Meal Search' onChange={handleSearch}></input>
         </form>
         <br />
         <br />
@@ -84,6 +89,8 @@ const AddMeal = () => {
                 <th style={style} className='text-light'>Phosphorus</th>
                 <th style={style} className='text-light'>Potassium</th>
                 <th style={style} className='text-light'>Sodium</th>
+                <th style={style} className='text-light'>Serving Size</th>
+                <th style={style} className='text-light'>Serving Unit</th>
                 <th></th>
             </tr>
             </thead>
