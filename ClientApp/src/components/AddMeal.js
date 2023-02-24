@@ -36,12 +36,26 @@ const AddMeal = () => {
     const changePage = (n) => {
         searchFdc(`${searchTerm}&pageNumber=${n}`)
         .then(res => {
+            setPageList(res.data.pageList)
             setResults(res.data.foods.map(food =>{
                 return foodToNutrition(food)
             }))
         })
         .then(setPageNumber(n))
         .catch(err => console.log(err.response))
+    }
+
+    const next = () => {
+        if(pageNumber < pageList[pageList.length - 1]){
+            changePage(pageNumber + 1)
+        }
+    }
+
+    const prev = () => {
+        if(pageNumber > 1){
+            changePage(pageNumber - 1)
+        }
+
     }
 
     const foodToNutrition = (food) =>{
@@ -88,6 +102,7 @@ const AddMeal = () => {
     }
 
     const pageListElement = (<span><strong>Page: </strong>
+    <button style={{"paddingLeft":"1em", "paddingRight":"1em"}} onClick={prev}>Prev</button>
     {pageList.map(item =>{
         return(<button 
             key={item} 
@@ -98,6 +113,7 @@ const AddMeal = () => {
             changePage(pageNumber)}}
             >{item}</button>)
     })}
+    <button style={{"paddingLeft":"1em", "paddingRight":"1em"}} onClick={next}>Next</button>
 </span>)
 
   return (
