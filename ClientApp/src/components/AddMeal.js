@@ -7,6 +7,10 @@ const AddMeal = () => {
 
     const [searchTerm, setSearchTerm] = useState()
 
+    const [pageNumber, setPageNumber] = useState(1)
+
+    const [pageList, setPageList] = useState([])
+
     const [results, setResults] = useState([])
 
     const style = {"padding":"3px", "paddingLeft":"10px", "paddingRight":"10px"}
@@ -15,14 +19,28 @@ const AddMeal = () => {
         setSearchTerm(e.target.value)
     }
 
+
     const search = (e) => {
         e.preventDefault()
         searchFdc(searchTerm)
+        .then(res => {
+            setPageList(res.data.pageList)
+            setResults(res.data.foods.map(food =>{
+                return foodToNutrition(food)
+            }))
+        })
+        .then(setPageNumber(1))
+        .catch(err => console.log(err.response))
+    }
+
+    const changePage = (n) => {
+        searchFdc(`${searchTerm}&pageNumber=${n}`)
         .then(res => {
             setResults(res.data.foods.map(food =>{
                 return foodToNutrition(food)
             }))
         })
+        .then(setPageNumber(n))
         .catch(err => console.log(err.response))
     }
 
@@ -69,15 +87,29 @@ const AddMeal = () => {
         })
     }
 
+    const pageListElement = (<span><strong>Page: </strong>
+    {pageList.map(item =>{
+        return(<button 
+            key={item} 
+            style={{"paddingLeft":"1em", "paddingRight":"1em"}} 
+            className={item === pageNumber ? "bg-primary text-light" : ""} 
+            onClick={() => {
+            const pageNumber = item;
+            changePage(pageNumber)}}
+            >{item}</button>)
+    })}
+</span>)
+
   return (
     <div>
         <form onSubmit={search}>
-            <input id='search' className='form-control' type='search' placeholder='Meal Search' onChange={handleSearch}></input>
+            <input id='search' className='form-control' type='search' placeholder='Meal Search' onChange={handleSearch} />
         </form>
         <br />
         <br />
         {results.length > 0 ?
         <>
+        {pageListElement}
         <table className='table'>
             <thead>
             <tr style={style} className='bg-dark'>
@@ -102,6 +134,7 @@ const AddMeal = () => {
             )
         })}
         </table>
+        {pageListElement}
         </>
         :<></>}
     </div>
