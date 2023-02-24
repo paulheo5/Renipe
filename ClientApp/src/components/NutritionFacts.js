@@ -16,7 +16,7 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
 
     const [hide, setHide] = useState(true)
 
-    const date = new Date(2023, 1, 20)
+    const date = new Date()
     
     const initialValues = {
             "mealId" : food.mealId,
