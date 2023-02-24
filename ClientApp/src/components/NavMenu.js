@@ -59,6 +59,15 @@ function Navbar() {
                                 Add Meal
                             </Link>
                         </li>
+                        <li className='nav-item'>
+                            <Link
+                                to='/SearchRecipe'
+                                className='nav-links'
+                                onClick={closeMobileMenu}
+                            >
+                                Search Recipes
+                            </Link>
+                        </li>
 
              
                     </ul>
