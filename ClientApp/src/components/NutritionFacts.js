@@ -21,15 +21,17 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
     const initialValues = {
             "mealId" : food.mealId,
             "foodName" : food.foodName,
-            "caloriesPerServing" : Math.round(food.caloriesPerServing / (food.servings ?? 1)),
-            "carbohydratesPerServing" : Math.round(food.carbohydratesPerServing / (food.servings ?? 1)),
-            "proteinPerServing" : Math.round(food.proteinPerServing / (food.servings ?? 1)),
-            "fatPerServing" : Math.round(food.fatPerServing / (food.servings ?? 1)),
-            "phosphorusPerServing" : Math.round(food.phosphorusPerServing / (food.servings ?? 1)),
-            "potassiumPerServing" : Math.round(food.potassiumPerServing / (food.servings ?? 1)),
-            "sodiumPerServing" : Math.round(food.sodiumPerServing / (food.servings ?? 1)),
+            "caloriesPerServing" : Math.round(food.caloriesPerServing),
+            "carbohydratesPerServing" : Math.round(food.carbohydratesPerServing),
+            "proteinPerServing" : Math.round(food.proteinPerServing),
+            "fatPerServing" : Math.round(food.fatPerServing),
+            "phosphorusPerServing" : Math.round(food.phosphorusPerServing),
+            "potassiumPerServing" : Math.round(food.potassiumPerServing),
+            "sodiumPerServing" : Math.round(food.sodiumPerServing),
             "date" : food.date ?? date,
-            "servings" : food.servings ?? 1
+            "servings" : food.servings ?? 1,
+            "servingSize" : food.servingSize,
+            "servingSizeUnit" : food.servingSizeUnit
     }    
     
     const [meal, setMeal] = useState(initialValues)
@@ -40,14 +42,16 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
     const updateValues = (e) =>{
         setMeal({
             ...meal,
-            "caloriesPerServing" : Math.round(initialValues.caloriesPerServing * e.target.value),
-            "carbohydratesPerServing" : Math.round(initialValues.carbohydratesPerServing * e.target.value),
-            "proteinPerServing" : Math.round(initialValues.proteinPerServing * e.target.value),
-            "fatPerServing" : Math.round(initialValues.fatPerServing * e.target.value),
-            "phosphorusPerServing" : Math.round(initialValues.phosphorusPerServing * e.target.value),
-            "potassiumPerServing" : Math.round(initialValues.potassiumPerServing * e.target.value),
-            "sodiumPerServing" : Math.round(initialValues.sodiumPerServing * e.target.value),
-            "servings" : e.target.value
+            "caloriesPerServing" : Math.round(initialValues.caloriesPerServing),
+            "carbohydratesPerServing" : Math.round(initialValues.carbohydratesPerServing),
+            "proteinPerServing" : Math.round(initialValues.proteinPerServing),
+            "fatPerServing" : Math.round(initialValues.fatPerServing),
+            "phosphorusPerServing" : Math.round(initialValues.phosphorusPerServing),
+            "potassiumPerServing" : Math.round(initialValues.potassiumPerServing),
+            "sodiumPerServing" : Math.round(initialValues.sodiumPerServing),
+            "servings" : e.target.value,
+            "servingSize" : initialValues.servingSize,
+            "servingSizeUnit" : initialValues.servingSizeUnit
         })
     }
 
@@ -67,7 +71,7 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
     }
 
     const clickDelete = () => {
-        const result = confirm(`Are you sure you want to delete ${initialValues.servings} servings of ${meal.foodName}?`)
+        const result = confirm(`Are you sure you want to delete ${meal.servings} servings of ${meal.foodName}?`)
         if(result){
             deleteMeal(meal.mealId)
             .catch(err => console.log(err.response))
@@ -81,24 +85,27 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
     <tr>
         {/* {mealView ? <td style={style}>{food.mealId}</td> :<></>} */}
         <td style={style}>{meal.foodName}</td>
-        <td style={style}>{meal.caloriesPerServing}</td>
-        <td style={style}>{meal.carbohydratesPerServing}</td>
-        <td style={style}>{meal.proteinPerServing}</td>
-        <td style={style}>{meal.fatPerServing}</td>
-        <td style={style} className={food.phosphorusPerServing > 50 ? "text-danger" : ""}>{meal.phosphorusPerServing}</td>
-        <td style={style} className={food.potassiumPerServing > 200 ? "text-danger" : ""}>{meal.potassiumPerServing}</td>
-        <td style={style} className={food.sodiumPerServing > 220 ? "text-danger" : ""}>{meal.sodiumPerServing}</td>
+        <td style={style}>{Math.round(meal.caloriesPerServing * meal.servings)}</td>
+        <td style={style}>{Math.round(meal.carbohydratesPerServing * meal.servings)}</td>
+        <td style={style}>{Math.round(meal.proteinPerServing * meal.servings)}</td>
+        <td style={style}>{Math.round(meal.fatPerServing * meal.servings)}</td>
+        <td style={style} className={food.phosphorusPerServing > 50 ? "text-danger" : ""}>{Math.round(meal.phosphorusPerServing * meal.servings)}</td>
+        <td style={style} className={food.potassiumPerServing > 200 ? "text-danger" : ""}>{Math.round(meal.potassiumPerServing * meal.servings)}</td>
+        <td style={style} className={food.sodiumPerServing > 220 ? "text-danger" : ""}>{Math.round(meal.sodiumPerServing * meal.servings)}</td>
+        <td style={style}>{meal.servingSize}</td>
+        <td style={style}>{meal.servingSizeUnit}</td>
+        <td>{meal.test}</td>
             {mealView ? <>
                 <td style={style}>{meal.servings}</td>
                 <td style={style}>{meal.date}</td>
                 <td>
-                    <button className='bg-danger text-light'onClick={clickDelete}>Delete</button>
-                    <button style={{"marginLeft":"1em"}} className='bg-warning text-dark' onClick={() => setHide(!hide)}>Update</button>
+                    <button className='btn btn-danger text-light'onClick={clickDelete}>Delete</button>
+                    <button style={{"marginLeft":"1em"}} className='btn btn-warning text-dark' onClick={() => setHide(!hide)}>Update</button>
                 </td>
             </>
             :
             <td>
-                <button className="bg-light" onClick={() => setHide(!hide)}>Select</button>
+                <button className="btn btn-primary" onClick={() => setHide(!hide)}>Select</button>
             </td>
         }
     </tr>
@@ -120,7 +127,7 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
                 <input className="input-control" id="servings" name="servings" type="range" min={.25} max={5} step={.25} defaultValue={meal.servings} onInput={updateValues} />
                 <label htmlFor='servings value' style={{"marginLeft":"1em"}}>{meal.servings}</label>
                 <br />
-                <button type="submit" className='btn-success'>Track</button>
+                <button type="submit" className='btn btn-success'>Track</button>
             </form>
         </td>
     </tr>
