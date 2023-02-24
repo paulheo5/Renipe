@@ -42,6 +42,8 @@ const Meals = () => {
                     <th style={style}>Sodium</th>
                     <th style={style}>Servings</th>
                     <th style={style}>Date</th>
+                    <th style={style}>Serving Size</th>
+                    <th style={style}>Serving Unit</th>
                     <th style={style}></th>
                 </tr>
                 </thead>
