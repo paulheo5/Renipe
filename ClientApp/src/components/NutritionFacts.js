@@ -96,7 +96,7 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
         <td style={style}>{meal.servingSizeUnit}</td>
             {mealView ? <>
                 <td style={style}>{meal.servings}</td>
-                <td style={style}>{meal.date}</td>
+                <td style={style}>{new Date(meal.date).toLocaleDateString()}</td>
                 <td>
                     <button className='btn btn-danger text-light'onClick={clickDelete}>Delete</button>
                     <button style={{"marginLeft":"1em"}} className='btn btn-warning text-dark' onClick={() => setHide(!hide)}>Update</button>
