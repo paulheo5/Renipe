@@ -1,6 +1,8 @@
 ﻿import React from 'react'
 import { useState } from 'react'
 import { searchSpoon } from '../services/Spoonacular'
+import './Cards.css';
+import CardItem from '../components/CardItem';
 
 const SearchRecipe = () => {
 
@@ -43,15 +45,24 @@ const SearchRecipe = () => {
                 <button type='submit'>Search</button>
             </form>
             </div>
-         
-            <div>
+
+            <div className='cards__recipecontainer'>
 
 
                   
                     {results.map(result => (
-                    <React.Fragment key={result.id}>
-                            <p>{result.title}</p>
-                            <img src={result.image } ></img>
+                        <React.Fragment key={result.id}>
+                            <div className='cards'>
+
+                               
+                                            <CardItem 
+                                                src={result.image}
+                                                text={result.title}
+
+                                                path='/RecipeInfo'
+                                            />
+                            
+                                </div>
                     </React.Fragment>
                             
                             

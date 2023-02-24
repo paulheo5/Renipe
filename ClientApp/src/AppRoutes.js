@@ -4,6 +4,7 @@ import { Home }  from "./components/Home";
 import Meals from "./components/Meals";
 import AddMeal from "./components/AddMeal";
 import SearchRecipe from "./components/SearchRecipe";
+import RecipeInfo from "./components/RecipeInfo"
 
 
 const AppRoutes = [
@@ -29,7 +30,11 @@ const AppRoutes = [
     {
         path: '/SearchRecipe',
         element: <SearchRecipe/>
-    }
+    },
+    {
+        path: '/RecipeInfo',
+        element: <RecipeInfo/>
+        }
 
 ];
 
