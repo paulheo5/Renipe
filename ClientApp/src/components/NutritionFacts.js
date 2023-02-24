@@ -15,8 +15,6 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
     }
 
     const [hide, setHide] = useState(true)
-
-    const date = new Date()
     
     const initialValues = {
             "mealId" : food.mealId,
@@ -28,11 +26,16 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
             "phosphorusPerServing" : Math.round(food.phosphorusPerServing),
             "potassiumPerServing" : Math.round(food.potassiumPerServing),
             "sodiumPerServing" : Math.round(food.sodiumPerServing),
-            "date" : food.date ?? date,
+            "date" : new Date(food.date),
             "servings" : food.servings ?? 1,
             "servingSize" : food.servingSize,
             "servingSizeUnit" : food.servingSizeUnit
     }    
+
+    const year = new Date().getFullYear();
+    const month = (initialValues.date.getMonth() > 9) ? initialValues.date.GetMonth() + 1 : "0" + (initialValues.date.getMonth() + 1).toString()
+    const dateDay = (initialValues.date.getDate() > 9) ? initialValues.date.getDate() : "0" + initialValues.date.getDate().toString()
+    const dateString = `${year}-${month}-${dateDay}`
     
     const [meal, setMeal] = useState(initialValues)
     useEffect(() => {
@@ -122,7 +125,7 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
                 <div className='row'>
                     <div className='col col-sm-3'>
                         <label htmlFor="date" className="col-sm-1">Date: </label>
-                        <input className="form-control" id="date" name="date" type="date" value={meal.date} onInput={(e) => setMeal({...meal, "date":e.target.value})} />
+                        <input className="form-control" id="date" name="date" type="date" defaultValue={dateString} onInput={(e) => setMeal({...meal, "date":e.target.value})} />
                     </div>
                 </div>
                 <br />
