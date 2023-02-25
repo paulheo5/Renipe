@@ -1,4 +1,4 @@
-﻿import React, { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { recipeInfo } from '../services/Spoonacular'
 import NutritionFacts from './NutritionFacts'
@@ -76,15 +76,15 @@ const RecipeInfo = () => {
             <button className='btn' onClick={() => setHide(!hide)}>Nutrition Info</button>
             <table className="table" hidden={hide} >
                 <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Calories</th>
-                        <th>Carbohydrates</th>
-                        <th>Protein</th>
-                        <th>Fat</th>
-                        <th>Phosphorus</th>
-                        <th>Potassium</th>
-                        <th>Sodium</th>
+                    <tr className='bg-dark'>
+                        <th className='text-light'>Name</th>
+                        <th className='text-light'>Calories</th>
+                        <th className='text-light'>Carbohydrates</th>
+                        <th className='text-light'>Protein</th>
+                        <th className='text-light'>Fat</th>
+                        <th className='text-light'>Phosphorus</th>
+                        <th className='text-light'>Potassium</th>
+                        <th className='text-light'>Sodium</th>
                     </tr>
                 </thead>
                 <NutritionFacts food={food} />
