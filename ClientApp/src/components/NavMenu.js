@@ -68,6 +68,15 @@ function Navbar() {
                                 Search Recipes
                             </Link>
                         </li>
+                        <li className='nav-item'>
+                            <Link
+                                to='/DailyView'
+                                className='nav-links'
+                                onClick={closeMobileMenu}
+                            >
+                                Daily View
+                            </Link>
+                        </li>
 
              
                     </ul>
