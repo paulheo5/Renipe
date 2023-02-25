@@ -78,7 +78,7 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
     }
 
     const clickDelete = () => {
-        const result = confirm(`Are you sure you want to delete ${meal.servings} servings of ${meal.foodName}?`)
+        const result = confirm(`Are you sure you want to delete ${meal.servings} ${meal.servings === 1 ? 'serving' : 'servings'} of ${meal.foodName}?`)
         if(result){
             deleteMeal(meal.mealId)
             .then(() => {
@@ -92,7 +92,6 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
   return (
     <tbody>
     <tr>
-        {/* {mealView ? <td style={style}>{food.mealId}</td> :<></>} */}
         <td style={style}>{meal.foodName}</td>
         <td style={style}>{Math.round(meal.caloriesPerServing * meal.servings)}</td>
         <td style={style}>{Math.round(meal.carbohydratesPerServing * meal.servings)}g</td>
