@@ -69,7 +69,8 @@ const AddMeal = () => {
 
      
         const id = food.fdcId;
-        const foodName = food.description;
+        const brandOwner = food.brandOwner;
+        const foodName = `${brandOwner !== undefined? brandOwner + " " : ""}${food.description}`;
         let caloriesPerServing = (food.foodNutrients.filter(nutrient => nutrient.nutrientId === calories)[0]?.value) ?? -1
         const carbohydratesPerServing = (food.foodNutrients.filter(nutrient => nutrient.nutrientId === carbs)[0]?.value) ?? 0
         const proteinPerServing = (food.foodNutrients.filter(nutrient => nutrient.nutrientId === protein)[0]?.value) ?? 0
@@ -127,7 +128,7 @@ const AddMeal = () => {
         {results.length > 0 ?
         <>
         {pageListElement}
-        <table className='table'>
+        <table className='table table-striped'>
             <thead>
             <tr style={style} className='bg-dark'>
                 <th style={style} className='text-light'>Name</th>
@@ -146,7 +147,7 @@ const AddMeal = () => {
         {results.map(food =>{
             return(
                 <React.Fragment key={food.id}>
-                    <NutritionFacts food={food} />
+                    <NutritionFacts food={food} style={style} />
                 </React.Fragment>
             )
         })}

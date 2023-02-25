@@ -1,4 +1,4 @@
-﻿import React, { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { recipeInfo } from '../services/Spoonacular'
 import NutritionFacts from './NutritionFacts'
@@ -44,12 +44,12 @@ const RecipeInfo = () => {
     const food = {
         "foodName" : foodName,
         "caloriesPerServing" : calories,
-        "carbohydratesPerServing" : carbohydrates,
-        "proteinPerServing" : protein,
-        "fatPerServing" : fat,
-        "phosphorusPerServing" : phosphorus,
-        "potassiumPerServing" : potassium,
-        "sodiumPerServing" : sodium,
+        "carbohydratesPerServing" : isNaN(carbohydrates) ? 0 : carbohydrates,
+        "proteinPerServing" : isNaN(protein) ? 0 : protein,
+        "fatPerServing" : isNaN(fat) ? 0 : fat,
+        "phosphorusPerServing" : isNaN(phosphorus) ? 0 : phosphorus,
+        "potassiumPerServing" : isNaN(potassium) ? 0 : potassium,
+        "sodiumPerServing" : isNaN(sodium) ? 0 : sodium,
         "date" : new Date()
     }
 
@@ -79,15 +79,15 @@ const RecipeInfo = () => {
             <Button className='btn'  onClick={() => setHide(!hide)}>Nutrition Info</Button>
             <table className="table" hidden={hide} >
                 <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Calories</th>
-                        <th>Carbohydrates</th>
-                        <th>Protein</th>
-                        <th>Fat</th>
-                        <th>Phosphorus</th>
-                        <th>Potassium</th>
-                        <th>Sodium</th>
+                    <tr className='bg-dark'>
+                        <th className='text-light'>Name</th>
+                        <th className='text-light'>Calories</th>
+                        <th className='text-light'>Carbohydrates</th>
+                        <th className='text-light'>Protein</th>
+                        <th className='text-light'>Fat</th>
+                        <th className='text-light'>Phosphorus</th>
+                        <th className='text-light'>Potassium</th>
+                        <th className='text-light'>Sodium</th>
                     </tr>
                 </thead>
                 <NutritionFacts food={food} />
