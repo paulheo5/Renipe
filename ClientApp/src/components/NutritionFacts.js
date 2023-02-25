@@ -64,11 +64,15 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
         e.preventDefault()
         if(mealView){
             updateMeal(meal.mealId, meal)
-            .then(navigate('/meals'))
+            .then(() => {
+                navigate(setHide(!hide))
+            })
             .catch(err => console.log(err.response))
         }else{
         trackMeal(meal)
-            .then(navigate('/meals'))
+            .then(() => {
+                navigate('/meals')
+            })
             .catch(err => console.log(err.response))
         }
     }
@@ -77,9 +81,11 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
         const result = confirm(`Are you sure you want to delete ${meal.servings} servings of ${meal.foodName}?`)
         if(result){
             deleteMeal(meal.mealId)
+            .then(() => {
+                const updatedMeals = meals.filter(m => m.mealId != meal.mealId)
+                setMeals(updatedMeals)
+            })
             .catch(err => console.log(err.response))
-            const updatedMeals = meals.filter(m => m.mealId != meal.mealId)
-            setMeals(updatedMeals)
         }
     }
     
@@ -89,12 +95,12 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
         {/* {mealView ? <td style={style}>{food.mealId}</td> :<></>} */}
         <td style={style}>{meal.foodName}</td>
         <td style={style}>{Math.round(meal.caloriesPerServing * meal.servings)}</td>
-        <td style={style}>{Math.round(meal.carbohydratesPerServing * meal.servings)}</td>
-        <td style={style}>{Math.round(meal.proteinPerServing * meal.servings)}</td>
-        <td style={style}>{Math.round(meal.fatPerServing * meal.servings)}</td>
-        <td style={style} className={food.phosphorusPerServing > 50 ? "text-danger" : ""}>{Math.round(meal.phosphorusPerServing * meal.servings)}</td>
-        <td style={style} className={food.potassiumPerServing > 200 ? "text-danger" : ""}>{Math.round(meal.potassiumPerServing * meal.servings)}</td>
-        <td style={style} className={food.sodiumPerServing > 220 ? "text-danger" : ""}>{Math.round(meal.sodiumPerServing * meal.servings)}</td>
+        <td style={style}>{Math.round(meal.carbohydratesPerServing * meal.servings)}g</td>
+        <td style={style}>{Math.round(meal.proteinPerServing * meal.servings)}g</td>
+        <td style={style}>{Math.round(meal.fatPerServing * meal.servings)}g</td>
+        <td style={style} className={food.phosphorusPerServing > 50 ? "text-danger" : ""}>{Math.round(meal.phosphorusPerServing * meal.servings)}mg</td>
+        <td style={style} className={food.potassiumPerServing > 200 ? "text-danger" : ""}>{Math.round(meal.potassiumPerServing * meal.servings)}mg</td>
+        <td style={style} className={food.sodiumPerServing > 220 ? "text-danger" : ""}>{Math.round(meal.sodiumPerServing * meal.servings)}mg</td>
         <td style={style}>{meal.servingSize}</td>
         <td style={style}>{meal.servingSizeUnit}</td>
             {mealView ? <>
@@ -107,7 +113,7 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
             </>
             :
             <td>
-                <button className="btn btn-primary" onClick={() => setHide(!hide)}>Select</button>
+                <button className="btn btn-primary" onClick={() => setHide(!hide)}>Track</button>
             </td>
         }
     </tr>
@@ -137,7 +143,7 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
                     </div>
                 </div>
                 <br />
-                <button type="submit" className='btn btn-success'>Track</button>
+                <button type="submit" className='btn btn-success'>Save</button>
             </form>
         </td>
     </tr>
