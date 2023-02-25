@@ -43,12 +43,12 @@ const RecipeInfo = () => {
     const food = {
         "foodName" : foodName,
         "caloriesPerServing" : calories,
-        "carbohydratesPerServing" : carbohydrates,
-        "proteinPerServing" : protein,
-        "fatPerServing" : fat,
-        "phosphorusPerServing" : phosphorus,
-        "potassiumPerServing" : potassium,
-        "sodiumPerServing" : sodium,
+        "carbohydratesPerServing" : isNaN(carbohydrates) ? 0 : carbohydrates,
+        "proteinPerServing" : isNaN(protein) ? 0 : protein,
+        "fatPerServing" : isNaN(fat) ? 0 : fat,
+        "phosphorusPerServing" : isNaN(phosphorus) ? 0 : phosphorus,
+        "potassiumPerServing" : isNaN(potassium) ? 0 : potassium,
+        "sodiumPerServing" : isNaN(sodium) ? 0 : sodium,
         "date" : new Date()
     }
 
