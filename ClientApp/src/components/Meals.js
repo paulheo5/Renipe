@@ -28,20 +28,20 @@ const Meals = () => {
         <>
             <table className="table">
                 <thead>
-                <tr>
-                    <th style={style}>Name</th>
-                    <th style={style}>Calories</th>
-                    <th style={style}>Carbohydrates</th>
-                    <th style={style}>Protein</th>
-                    <th style={style}>Fat</th>
-                    <th style={style}>Phosphorus</th>
-                    <th style={style}>Potassium</th>
-                    <th style={style}>Sodium</th>
-                    <th style={style}>Serving Size</th>
-                    <th style={style}>Serving Unit</th>
-                    <th style={style}>Servings</th>
-                    <th style={style}>Date</th>
-                    <th style={style}></th>
+                <tr className='bg-dark'>
+                    <th className='text-light' style={style}>Name</th>
+                    <th className='text-light' style={style}>Calories</th>
+                    <th className='text-light' style={style}>Carbohydrates</th>
+                    <th className='text-light' style={style}>Protein</th>
+                    <th className='text-light' style={style}>Fat</th>
+                    <th className='text-light' style={style}>Phosphorus</th>
+                    <th className='text-light' style={style}>Potassium</th>
+                    <th className='text-light' style={style}>Sodium</th>
+                    <th className='text-light' style={style}>Serving Size</th>
+                    <th className='text-light' style={style}>Serving Unit</th>
+                    <th className='text-light' style={style}>Servings</th>
+                    <th className='text-light' style={style}>Date</th>
+                    <th className='text-light' style={style}></th>
                 </tr>
                 </thead>
                 {meals.map(meal => {
