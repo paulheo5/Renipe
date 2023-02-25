@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { recipeInfo } from '../services/Spoonacular'
 import NutritionFacts from './NutritionFacts'
+import './RecipeInfo.css';
 
 
 const RecipeInfo = () => {
@@ -53,7 +54,16 @@ const RecipeInfo = () => {
 
     return (
         <>
-            <img src={info.image }/>
+         
+            <div className = 'recipe'>
+                <h1 className = 'recipe-title'>{info.title}</h1>
+                <img className='recipe-image' src={info.image}  />
+             
+        
+                 
+                
+        
+            </div>
         <div>
             {/*{JSON.stringify(info)}*/}
             {info.title}
