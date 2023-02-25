@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { recipeInfo } from '../services/Spoonacular'
 import NutritionFacts from './NutritionFacts'
 import './RecipeInfo.css';
+import { Button } from './Button';
 
 
 const RecipeInfo = () => {
@@ -57,7 +58,9 @@ const RecipeInfo = () => {
          
             <div className = 'recipe'>
                 <h1 className = 'recipe-title'>{info.title}</h1>
-                <img className='recipe-image' src={info.image}  />
+                <img className='recipe-image' src={info.image} />
+                <p className='recipe-info' dangerouslySetInnerHTML={{ __html: info.summary }}/>
+
              
         
                  
@@ -66,14 +69,14 @@ const RecipeInfo = () => {
             </div>
         <div>
             {/*{JSON.stringify(info)}*/}
-            {info.title}
+
             {/*{info.map(infos => {*/}
             {/*    <div>{infos.title}</div>*/}
 
             {/*    })}*/}
          
             <br />
-            <button className='btn' onClick={() => setHide(!hide)}>Nutrition Info</button>
+            <Button className='btn'  onClick={() => setHide(!hide)}>Nutrition Info</Button>
             <table className="table" hidden={hide} >
                 <thead>
                     <tr className='bg-dark'>
@@ -93,8 +96,10 @@ const RecipeInfo = () => {
             </div>
         </>
 
-        )
+    )
+
 }
+
 
 
 export default RecipeInfo;
