@@ -5,6 +5,7 @@ import Meals from "./components/Meals";
 import AddMeal from "./components/AddMeal";
 import SearchRecipe from "./components/SearchRecipe";
 import RecipeInfo from "./components/RecipeInfo"
+import DailyView from "./components/DailyView";
 
 
 const AppRoutes = [
@@ -28,13 +29,17 @@ const AppRoutes = [
     element: <AddMeal />
     },
     {
-        path: '/SearchRecipe',
-        element: <SearchRecipe/>
+      path: '/SearchRecipe',
+      element: <SearchRecipe/>
     },
     {
-        path: '/RecipeInfo',
-        element: <RecipeInfo/>
-        }
+      path: '/RecipeInfo',
+      element: <RecipeInfo/>
+    },
+    {
+      path: '/DailyView',
+      element: <DailyView />
+    }
 
 ];
 
