@@ -20,13 +20,14 @@ const Meals = () => {
 
     useEffect(() => {
       retrieveMeals()
+      console.log()
     },[])
 
     const style = {"padding":"3px", "paddingLeft":"10px", "paddingRight":"10px"}
 
     return (
         <>
-            <table className="table">
+            <table className="table table-striped">
                 <thead>
                 <tr className='bg-dark'>
                     <th className='text-light' style={style}>Name</th>
@@ -41,32 +42,13 @@ const Meals = () => {
                     <th className='text-light' style={style}>Serving Unit</th>
                     <th className='text-light' style={style}>Servings</th>
                     <th className='text-light' style={style}>Date</th>
-                    <th className='text-light' style={style}></th>
+                    <th className='text-light' ></th>
                 </tr>
                 </thead>
                 {meals.map(meal => {
                     return (
                         <React.Fragment key={meal.mealId}>
-                        {/* <tr key={meal.mealId}>
-                            <td>{meal.mealId}</td>
-                            <td>{meal.foodName}</td>
-                            <td>{meal.servingSize}</td>
-                            <td>{meal.servingSizeUnit}</td>
-                            <td>{meal.caloriesPerServing}</td>
-                            <td>{meal.carbohydratesPerServing}</td>
-                            <td>{meal.proteinPerServing}</td>
-                            <td>{meal.fatPerServing}</td>
-                            <td>{meal.phosphorusPerServing}</td>
-                            <td>{meal.potassiumPerServing}</td>
-                            <td>{meal.sodiumPerServing}</td>
-                            <td>{meal.servings}</td>
-                            <td>{meal.date}</td>
-                            <td>
-                                <button className="bg-danger text-light">Delete</button>
-                                <button style={{"marginLeft":"1em"}} className="bg-warning text-dark">Edit</button>
-                            </td>
-                        </tr> */}
-                        <NutritionFacts food={meal} mealView={true} style={style} meals={meals} setMeals={setMeals} />
+                            <NutritionFacts food={meal} mealView={true} style={style} meals={meals} setMeals={setMeals} />
                         </React.Fragment>
                     )
                 })}

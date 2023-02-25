@@ -22,7 +22,7 @@ const DailyView = () => {
       retrieveMeals()
     },[])
 
-    const style = {"marginLeft":"1em"}
+    const style = {"padding":"3px", "paddingLeft":"10px", "paddingRight":"10px"}
 
     const mealsByDate = dates.map(d => meals.filter(m => (new Date(m.date).toLocaleDateString()) === d))
 
@@ -31,7 +31,7 @@ const DailyView = () => {
     
   return (
     <div>
-        <table className='table'>
+        <table className='table table-striped'>
             <thead>
                 <tr className='bg-dark'>
                     <th style={style} className='text-light'>Date</th>

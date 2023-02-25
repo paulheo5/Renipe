@@ -128,7 +128,7 @@ const AddMeal = () => {
         {results.length > 0 ?
         <>
         {pageListElement}
-        <table className='table'>
+        <table className='table table-striped'>
             <thead>
             <tr style={style} className='bg-dark'>
                 <th style={style} className='text-light'>Name</th>
