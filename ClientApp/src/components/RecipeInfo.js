@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+﻿import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { recipeInfo } from '../services/Spoonacular'
 import NutritionFacts from './NutritionFacts'
@@ -10,6 +10,7 @@ const RecipeInfo = () => {
     const [info, setInfo] = useState({});
     const [nutrients, setNutrients] = useState([])
     const [steps, setSteps] = useState([])
+    const [ingredients, setIngredients] = useState([])
     //const recipe = SearchRecipe();
     //var id = recipe.state.id;
     const recipeid = window.localStorage.getItem("id");
@@ -24,6 +25,7 @@ const RecipeInfo = () => {
             setInfo(res.data);
             setNutrients(res.data.nutrition.nutrients);
             setSteps(res.data.analyzedInstructions[0].steps);
+            setIngredients(res.data.extendedIngredients)
             console.log(res.data.analyzedInstructions[0].steps);
             console.log(res.data);
         })
@@ -78,6 +80,20 @@ const RecipeInfo = () => {
                         <div className = 'summary' dangerouslySetInnerHTML={{ __html: info.summary }} />
                     </section>
                     <section className={`dishIngredients`}>
+                    <h3>Ingredients</h3>
+                        <div className = 'head'>
+                            <ul>
+                                {ingredients.map((ingredient) => {
+                                    return (
+
+                                        <li key={ingredient.id}>
+                                            <img style={{"width":"100px"}} src={`https://spoonacular.com/cdn/ingredients_100x100/${ingredient.image}`} />
+                                            {ingredient.original}
+                                        </li>
+                                    )
+                                })}
+                                </ul>
+                        </div>
                         <h3>Instructions</h3>
                         <div className = 'head'>
                             <ul>
