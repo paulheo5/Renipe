@@ -48,13 +48,14 @@ const SearchRecipe = () => {
             </form>
             </div>
 
-            <div className='cards__recipecontainer'>
+            <div className="col-md-3 mb-1 p-3 d-flex justify-content-center">
 
 
                   
                 {results.map(result => (
+                    <div>
                     <span key={result.id}>
-                            <div className='cards'>
+                            <div>
 
                             <CardItem id={result.id}
                                                 src={result.image}
@@ -64,7 +65,8 @@ const SearchRecipe = () => {
                                             />
                             
                                 </div>
-                    </span>
+                        </span>
+                        </div>
                             
                             
                             

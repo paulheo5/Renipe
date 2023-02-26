@@ -4,6 +4,7 @@ import { recipeInfo } from '../services/Spoonacular'
 import NutritionFacts from './NutritionFacts'
 import styles from './RecipeInfo.css';
 import { Button } from './Button';
+import { trackRecipe, updateRecipe, deleteRecipe } from '../services/SavedRecipes'
 
 
 const RecipeInfo = () => {
@@ -24,8 +25,8 @@ const RecipeInfo = () => {
             setInfo(res.data);
             setNutrients(res.data.nutrition.nutrients);
             setSteps(res.data.analyzedInstructions[0].steps);
-            console.log(res.data.analyzedInstructions[0].steps);
-            console.log(res.data);
+            //console.log(res.data.analyzedInstructions[0].steps);
+            //console.log(res.data);
         })
         .catch(err => console.log(err.response))
     }
@@ -33,6 +34,14 @@ const RecipeInfo = () => {
     useEffect(() => {
         retrieveMeals(recipeid)
     }, [])
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        trackRecipe(recipe).then(res => {
+            consol.log(res.data);
+            navigate('/SavedRecipes');
+        }).catch(err => console.log(err.response))
+    }
 
     const foodName = info.title;
     let calories = Math.round(nutrients.filter(n => n.name == "Calories")[0]?.amount) ?? -1;
@@ -98,7 +107,7 @@ const RecipeInfo = () => {
                 <div style={{ flexDirection: "row" }}>
           
                     <Button className='btn' onClick={() => setHide(!hide)}>Nutrition Info</Button>
-                    <Button >Save this!</Button>
+                    <Button onClick={handleSubmit } >Save this!</Button>
 
                 </div>
             <table className="table" hidden={hide} >
