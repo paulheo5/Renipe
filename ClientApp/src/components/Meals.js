@@ -38,8 +38,8 @@ const Meals = () => {
                     <th className='text-light' style={style}>Phosphorus</th>
                     <th className='text-light' style={style}>Potassium</th>
                     <th className='text-light' style={style}>Sodium</th>
-                    <th className='text-light' style={style}>Serving Size</th>
-                    <th className='text-light' style={style}>Serving Unit</th>
+                    <th className='text-light' style={{...style, 'width':'8em'}}>Serving Size</th>
+                    <th className='text-light' style={{...style, 'width':'8em'}}>Serving Unit</th>
                     <th className='text-light' style={style}>Servings</th>
                     <th className='text-light' style={style}>Date</th>
                     <th className='text-light' ></th>

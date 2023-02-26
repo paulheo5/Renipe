@@ -69,8 +69,8 @@ const AddMeal = () => {
 
      
         const id = food.fdcId;
-        const brandOwner = food.brandOwner;
-        const foodName = `${brandOwner !== undefined? brandOwner + " " : ""}${food.description}`;
+        const brandOwner = `${food.brandOwner !== undefined ? food.brandOwner + ": " : ""}`;
+        const foodName = `${brandOwner}${food.description}`;
         let caloriesPerServing = (food.foodNutrients.filter(nutrient => nutrient.nutrientId === calories)[0]?.value) ?? -1
         const carbohydratesPerServing = (food.foodNutrients.filter(nutrient => nutrient.nutrientId === carbs)[0]?.value) ?? 0
         const proteinPerServing = (food.foodNutrients.filter(nutrient => nutrient.nutrientId === protein)[0]?.value) ?? 0
@@ -78,7 +78,7 @@ const AddMeal = () => {
         const phosphorusPerServing = (food.foodNutrients.filter(nutrient => nutrient.nutrientId === phosphorus)[0]?.value) ?? 0
         const potassiumPerServing = (food.foodNutrients.filter(nutrient => nutrient.nutrientId === potassium)[0]?.value) ?? 0
         const sodiumPerServing = (food.foodNutrients.filter(nutrient => nutrient.nutrientId === sodium)[0]?.value) ?? 0
-        const servingSize = food.servingSize ?? ""
+        const servingSize = (food.servingSize !== undefined) ? Math.round(food.servingSize) : ""
         const servingSizeUnit = food.servingSizeUnit ?? ""
         const fullServingSize = servingSize + servingSizeUnit
         const servingSizeHousehold = food.householdServingFullText
@@ -139,8 +139,8 @@ const AddMeal = () => {
                 <th style={style} className='text-light'>Phosphorus</th>
                 <th style={style} className='text-light'>Potassium</th>
                 <th style={style} className='text-light'>Sodium</th>
-                <th style={style} className='text-light'>Serving Size</th>
-                <th style={style} className='text-light'>Serving Unit</th>
+                <th style={{...style, 'width':'8em'}} className='text-light'>Serving Size</th>
+                <th style={{...style, 'width':'8em'}} className='text-light'>Serving Unit</th>
                 <th></th>
             </tr>
             </thead>
