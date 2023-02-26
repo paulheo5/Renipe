@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+﻿import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { recipeInfo } from '../services/Spoonacular'
 import NutritionFacts from './NutritionFacts'
@@ -11,11 +11,14 @@ const RecipeInfo = () => {
     const [info, setInfo] = useState({});
     const [nutrients, setNutrients] = useState([])
     const [steps, setSteps] = useState([])
+    const [ingredients, setIngredients] = useState([])
     //const recipe = SearchRecipe();
     //var id = recipe.state.id;
     const recipeid = window.localStorage.getItem("id");
     
     const [hide, setHide] = useState(true);
+
+    const[servingSize, setServingSize] = useState("")
 
 
     
@@ -25,8 +28,10 @@ const RecipeInfo = () => {
             setInfo(res.data);
             setNutrients(res.data.nutrition.nutrients);
             setSteps(res.data.analyzedInstructions[0].steps);
-            //console.log(res.data.analyzedInstructions[0].steps);
-            //console.log(res.data);
+            setIngredients(res.data.extendedIngredients)
+            setServingSize(res.data.nutrition.weightPerServing.amount + res.data.nutrition.weightPerServing.unit);
+            console.log(res.data.analyzedInstructions[0].steps);
+            console.log(res.data);
         })
         .catch(err => console.log(err.response))
     }
@@ -44,13 +49,14 @@ const RecipeInfo = () => {
     }
 
     const foodName = info.title;
-    let calories = Math.round(nutrients.filter(n => n.name == "Calories")[0]?.amount) ?? -1;
-    const carbohydrates = Math.round(nutrients.filter(n => n.name == "Carbohydrates")[0]?.amount) ?? 0;
-    const protein = Math.round(nutrients.filter(n => n.name == "Protein")[0]?.amount) ?? 0;
-    const fat = Math.round(nutrients.filter(n => n.name == "Fat")[0]?.amount) ?? 0;
-    const phosphorus = Math.round(nutrients.filter(n => n.name == "Phosphorus")[0]?.amount) ?? 0;
-    const potassium = Math.round(nutrients.filter(n => n.name == "Potassium")[0]?.amount) ?? 0;
-    const sodium = Math.round(nutrients.filter(n => n.name == "Sodium")[0]?.amount) ?? 0;
+    let calories = isNaN(Math.round(nutrients.filter(n => n.name == "Calories")[0]?.amount)) ? -1 : Math.round(nutrients.filter(n => n.name == "Calories")[0]?.amount);
+    const carbohydrates = isNaN(Math.round(nutrients.filter(n => n.name == "Carbohydrates")[0]?.amount)) ? 0 : Math.round(nutrients.filter(n => n.name == "Carbohydrates")[0]?.amount);
+    const protein = isNaN(Math.round(nutrients.filter(n => n.name == "Protein")[0]?.amount)) ? 0 :Math.round(nutrients.filter(n => n.name == "Protein")[0]?.amount) ;
+    const fat = isNaN(Math.round(nutrients.filter(n => n.name == "Fat")[0]?.amount)) ? 0 : Math.round(nutrients.filter(n => n.name == "Fat")[0]?.amount);
+    const phosphorus = isNaN(Math.round(nutrients.filter(n => n.name == "Phosphorus")[0]?.amount)) ? 0 : Math.round(nutrients.filter(n => n.name == "Phosphorus")[0]?.amount);
+    const potassium = isNaN(Math.round(nutrients.filter(n => n.name == "Potassium")[0]?.amount)) ? 0 : Math.round(nutrients.filter(n => n.name == "Potassium")[0]?.amount);
+    const sodium = isNaN(Math.round(nutrients.filter(n => n.name == "Sodium")[0]?.amount)) ? 0 : Math.round(nutrients.filter(n => n.name == "Sodium")[0]?.amount);
+    const servingSizeUnit = "";
 
     calories = calories === -1 ? (4*(carbohydrates + protein)) + (9 * fat) : calories;
 
@@ -64,6 +70,8 @@ const RecipeInfo = () => {
         "phosphorusPerServing" : isNaN(phosphorus) ? 0 : phosphorus,
         "potassiumPerServing" : isNaN(potassium) ? 0 : potassium,
         "sodiumPerServing" : isNaN(sodium) ? 0 : sodium,
+        "servingSize" : servingSize,
+        "servingSizeUnit" : servingSizeUnit,
         "date" : new Date()
     }
 
@@ -87,6 +95,20 @@ const RecipeInfo = () => {
                         <div className = 'summary' dangerouslySetInnerHTML={{ __html: info.summary }} />
                     </section>
                     <section className={`dishIngredients`}>
+                    <h3>Ingredients</h3>
+                        <div className = 'head'>
+                            <ul>
+                                {ingredients.map((ingredient) => {
+                                    return (
+
+                                        <li key={ingredient.id}>
+                                            <img style={{"width":"100px"}} src={`https://spoonacular.com/cdn/ingredients_100x100/${ingredient.image}`} />
+                                            {ingredient.original}
+                                        </li>
+                                    )
+                                })}
+                                </ul>
+                        </div>
                         <h3>Instructions</h3>
                         <div className = 'head'>
                             <ul>
@@ -121,6 +143,9 @@ const RecipeInfo = () => {
                         <th className='text-light'>Phosphorus</th>
                         <th className='text-light'>Potassium</th>
                         <th className='text-light'>Sodium</th>
+                        <th className='text-light' style={{'width':'8em'}}>Serving Size</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <NutritionFacts food={food} />
