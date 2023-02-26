@@ -17,6 +17,8 @@ const RecipeInfo = () => {
     
     const [hide, setHide] = useState(true);
 
+    const[servingSize, setServingSize] = useState("")
+
 
     
     const retrieveMeals = (id) => {
@@ -26,6 +28,7 @@ const RecipeInfo = () => {
             setNutrients(res.data.nutrition.nutrients);
             setSteps(res.data.analyzedInstructions[0].steps);
             setIngredients(res.data.extendedIngredients)
+            setServingSize(res.data.nutrition.weightPerServing.amount + res.data.nutrition.weightPerServing.unit);
             console.log(res.data.analyzedInstructions[0].steps);
             console.log(res.data);
         })
@@ -37,13 +40,14 @@ const RecipeInfo = () => {
     }, [])
 
     const foodName = info.title;
-    let calories = Math.round(nutrients.filter(n => n.name == "Calories")[0]?.amount) ?? -1;
-    const carbohydrates = Math.round(nutrients.filter(n => n.name == "Carbohydrates")[0]?.amount) ?? 0;
-    const protein = Math.round(nutrients.filter(n => n.name == "Protein")[0]?.amount) ?? 0;
-    const fat = Math.round(nutrients.filter(n => n.name == "Fat")[0]?.amount) ?? 0;
-    const phosphorus = Math.round(nutrients.filter(n => n.name == "Phosphorus")[0]?.amount) ?? 0;
-    const potassium = Math.round(nutrients.filter(n => n.name == "Potassium")[0]?.amount) ?? 0;
-    const sodium = Math.round(nutrients.filter(n => n.name == "Sodium")[0]?.amount) ?? 0;
+    let calories = isNaN(Math.round(nutrients.filter(n => n.name == "Calories")[0]?.amount)) ? -1 : Math.round(nutrients.filter(n => n.name == "Calories")[0]?.amount);
+    const carbohydrates = isNaN(Math.round(nutrients.filter(n => n.name == "Carbohydrates")[0]?.amount)) ? 0 : Math.round(nutrients.filter(n => n.name == "Carbohydrates")[0]?.amount);
+    const protein = isNaN(Math.round(nutrients.filter(n => n.name == "Protein")[0]?.amount)) ? 0 :Math.round(nutrients.filter(n => n.name == "Protein")[0]?.amount) ;
+    const fat = isNaN(Math.round(nutrients.filter(n => n.name == "Fat")[0]?.amount)) ? 0 : Math.round(nutrients.filter(n => n.name == "Fat")[0]?.amount);
+    const phosphorus = isNaN(Math.round(nutrients.filter(n => n.name == "Phosphorus")[0]?.amount)) ? 0 : Math.round(nutrients.filter(n => n.name == "Phosphorus")[0]?.amount);
+    const potassium = isNaN(Math.round(nutrients.filter(n => n.name == "Potassium")[0]?.amount)) ? 0 : Math.round(nutrients.filter(n => n.name == "Potassium")[0]?.amount);
+    const sodium = isNaN(Math.round(nutrients.filter(n => n.name == "Sodium")[0]?.amount)) ? 0 : Math.round(nutrients.filter(n => n.name == "Sodium")[0]?.amount);
+    const servingSizeUnit = "";
 
     calories = calories === -1 ? (4*(carbohydrates + protein)) + (9 * fat) : calories;
 
@@ -57,6 +61,8 @@ const RecipeInfo = () => {
         "phosphorusPerServing" : isNaN(phosphorus) ? 0 : phosphorus,
         "potassiumPerServing" : isNaN(potassium) ? 0 : potassium,
         "sodiumPerServing" : isNaN(sodium) ? 0 : sodium,
+        "servingSize" : servingSize,
+        "servingSizeUnit" : servingSizeUnit,
         "date" : new Date()
     }
 
@@ -128,6 +134,9 @@ const RecipeInfo = () => {
                         <th className='text-light'>Phosphorus</th>
                         <th className='text-light'>Potassium</th>
                         <th className='text-light'>Sodium</th>
+                        <th className='text-light' style={{'width':'8em'}}>Serving Size</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <NutritionFacts food={food} />
