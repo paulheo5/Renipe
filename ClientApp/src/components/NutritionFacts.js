@@ -29,7 +29,7 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
             "date" : new Date(food.date),
             "servings" : food.servings ?? 1,
             "servingSize" : food.servingSize,
-            "servingSizeUnit" : food.servingSizeUnit
+            "servingSizeUnit" : food.servingSizeUnit ?? ""
     }    
 
     const year = new Date().getFullYear();
@@ -119,6 +119,7 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
     <tr hidden={hide}>
         <td colSpan={9}>
             <form onSubmit={handleSubmit}>
+                {/* Console error on RecipeInfo page from foodName hidden input, not sure why */}
                 <input id="foodName" name="foodName" type="hidden" value={meal.foodName} />
                 <input id="caloriesPerServing" name="caloriesPerServing" type="hidden" value={meal.caloriesPerServing} />
                 <input id="carbohydratesPerServing" name="carbohydratesPerServing" type="hidden" value={meal.carbohydratesPerServing} />
