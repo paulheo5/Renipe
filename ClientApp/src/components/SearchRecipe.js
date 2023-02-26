@@ -43,8 +43,7 @@ const SearchRecipe = () => {
         <>
         <div>
             <form onSubmit={search}>
-                <input id='search' type='search' placeholder='Enter ingredients' onChange={handleSearch}></input>
-                <button type='submit'>Search</button>
+                <input className='form-control' id='search' type='search' placeholder='Enter ingredients, eg. "bacon, eggs"' onChange={handleSearch}></input>
             </form>
             </div>
 
