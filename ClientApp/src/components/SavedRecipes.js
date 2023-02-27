@@ -60,7 +60,7 @@ const Saved = () => {
                                         window.localStorage.setItem("id", recipes.recipeId)
                                         navigate("/RecipeInfo")
                                     }}>Details</button>
-                                    <button className='btn btn-danger text-light' onClick={() => {
+                                        <button style={{"marginLeft":"1em"}}  className='btn btn-danger text-light' onClick={() => {
                                         const result = confirm(`Are you sure you want to delete ${recipes.title}?`)
                                         const updatedRecipeList = recipe.filter(r => r.id !== recipes.id)
                                         if (result) {

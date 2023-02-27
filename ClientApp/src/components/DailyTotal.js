@@ -18,9 +18,9 @@ const DailyTotal = ({meals, style}) => {
         <th style={style} >{totalCarbohydrates}</th>
         <th style={style} >{totalProtein}</th>
         <th style={style} >{totalFat}</th>
-        <th style={style} >{totalPhosphorus}</th>
-        <th style={style} >{totalPotassium}</th>
-        <th style={style} >{totalSodium}</th>
+        <th style={style} className={totalPhosphorus > 800 ? "text-danger" : ""}>{totalPhosphorus}</th>
+        <th style={style} className={totalPotassium > 3000 ? "text-danger" : ""} >{totalPotassium}</th>
+        <th style={style} className={totalSodium > 3000 ? "text-danger" : ""}>{totalSodium}</th>
     </>
   )
 }
