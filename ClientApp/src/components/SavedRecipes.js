@@ -1,6 +1,7 @@
 ﻿import React, { useEffect, useState } from 'react';
 import { getRecipe } from '../services/SavedRecipes';
 import { deleteRecipe } from '../services/SavedRecipes';
+import { useNavigate } from 'react-router-dom';
 
 
 const Saved = () => {
@@ -19,6 +20,9 @@ const Saved = () => {
     useEffect(() => {
         savedRecipe()
     }, [])
+
+    const navigate = useNavigate();
+
     //function clickDelete(food){
     //    const result = confirm(`Are you sure you want to delete ${food.title}?`)
     //    if (result) {
@@ -46,22 +50,27 @@ const Saved = () => {
                 </thead>
           {recipe.map(recipes => {
                     return (
+                        <React.Fragment key={recipes.id}>
                         <tbody>
                             <tr>
                                 <td style={style}>{recipes.title}</td>
                                 <td style={style}>{recipes.sourceUrl}</td>
                                 <td style={style}>
+                                    <button className='btn btn-primary text-light' onClick = {() => {
+                                        window.localStorage.setItem("id", recipes.recipeId)
+                                        navigate("/RecipeInfo")
+                                    }}>Details</button>
                                     <button className='btn btn-danger text-light' onClick={() => {
                                         const result = confirm(`Are you sure you want to delete ${recipes.title}?`)
                                         const updatedRecipeList = recipe.filter(r => r.id !== recipes.id)
                                         if (result) {
                                             deleteRecipe(recipes.id)
-                                                .then(() => {
-                                           
-                                                    setRecipe(updatedRecipeList)
-                                              
-                                                })
-                                                .catch(err => console.log(err.response))
+                                            .then(() => {
+                                                
+                                                setRecipe(updatedRecipeList)
+                                                
+                                            })
+                                            .catch(err => console.log(err.response))
                                         }
                                     }}
                                     > Delete</button>
@@ -70,6 +79,7 @@ const Saved = () => {
                                 </td>
                             </tr>
                         </tbody>
+                        </React.Fragment>
                     )
           })}
             </table>
