@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { trackMeal, updateMeal, deleteMeal } from '../services/Meals'
 import PropTypes from 'prop-types'
 
-const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
+const NutritionFacts = ({style, food, mealView, meals, setMeals, setMealsList}) => {
 
     NutritionFacts.propTypes = {
         style: PropTypes.object,
@@ -12,6 +12,7 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
         mealview: PropTypes.bool,
         meals: PropTypes.array,
         setMeals: PropTypes.func,
+        setMealsList: PropTypes.func,
     }
 
     const [hide, setHide] = useState(true)
@@ -84,7 +85,7 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
             .then(() => {
                 const updatedMeals = meals.filter(m => m.mealId != meal.mealId)
                 setMeals(updatedMeals)
-            })
+                })
             .catch(err => console.log(err.response))
         }
     }

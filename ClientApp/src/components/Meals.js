@@ -3,8 +3,8 @@ import { getMeals } from '../services/Meals';
 import {Link} from 'react-router-dom';
 import NutritionFacts from './NutritionFacts';
 
-const Meals = () => {
-    const [meals, setMeals] = useState([]);
+const Meals = ({mealsList = [], setMealsList}) => {
+    const [meals, setMeals] = useState(mealsList);
     
     const retrieveMeals = () => {
         getMeals()
@@ -19,8 +19,9 @@ const Meals = () => {
     }
 
     useEffect(() => {
-      retrieveMeals()
-      console.log()
+        if(mealsList.length < 1){
+            retrieveMeals()
+        }
     },[])
 
     const style = {"padding":"3px", "paddingLeft":"10px", "paddingRight":"10px"}
@@ -48,7 +49,7 @@ const Meals = () => {
                 {meals.map(meal => {
                     return (
                         <React.Fragment key={meal.mealId}>
-                            <NutritionFacts food={meal} mealView={true} style={style} meals={meals} setMeals={setMeals} />
+                            <NutritionFacts food={meal} mealView={true} style={style} meals={meals} setMeals={setMeals} setMealsList={setMealsList} />
                         </React.Fragment>
                     )
                 })}

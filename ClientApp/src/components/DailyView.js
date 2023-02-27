@@ -3,7 +3,6 @@ import { getMeals } from '../services/Meals'
 import DailyTotal from './DailyTotal'
 
 const DailyView = () => {
-
     const [meals, setMeals] = useState([])
     const [dates, setDates] = useState([])
 
@@ -12,8 +11,8 @@ const DailyView = () => {
         .then(res =>{
           setMeals(res.data)
           console.log(res.data)
-          const datesList = res.data.sort((a, b) => new Date(b.date) - new Date(a.date)).map(m => new Date(m.date).toLocaleDateString())
-          setDates([...new Set(datesList)])
+        //   const updatedDates = res.data.sort((a, b) => new Date(b.date) - new Date(a.date)).map(m => new Date(m.date).toLocaleDateString())
+        //   setDates([...new Set(updatedDates)])
         })
         .catch(err => console.log(err.response))
     }
@@ -22,12 +21,15 @@ const DailyView = () => {
       retrieveMeals()
     },[])
 
-    const style = {"padding":"3px", "paddingLeft":"10px", "paddingRight":"10px"}
+    useEffect(() => {
+        const updatedDates = meals.sort((a, b) => new Date(b.date) - new Date(a.date)).map(m => new Date(m.date).toLocaleDateString())
+        setDates([...new Set(updatedDates)])
+    },[meals])
 
     const mealsByDate = dates.map(d => meals.filter(m => (new Date(m.date).toLocaleDateString()) === d))
 
-    const DateView = mealsByDate.map(d => 
-        d.map(m => m.calo))
+    const style = {"padding":"3px", "paddingLeft":"10px", "paddingRight":"10px"}
+
     
   return (
     <div>
@@ -42,14 +44,15 @@ const DailyView = () => {
                     <th style={style} className='text-light'>Total Phosphorus</th>
                     <th style={style} className='text-light'>Total Potassium</th>
                     <th style={style} className='text-light'>Total Sodium</th>
+                    <th style={style} className='text-light'></th>
                 </tr>
             </thead>
             <tbody>
-                {mealsByDate.map(d =>{
+                {mealsByDate.filter(m => m.length > 0).map(d =>{
                     return(
-                    <tr key={d[0].date}>
-                        <DailyTotal style={style} meals={d}/>
-                    </tr>
+                    <React.Fragment key={d[0].date}>
+                        <DailyTotal style={style} meals={d} setMeals={setMeals} dates={dates} setDates={setDates} />
+                    </React.Fragment>
                     )
                 })}
             </tbody>
