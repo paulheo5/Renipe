@@ -12,7 +12,7 @@ const DailyView = () => {
         .then(res =>{
           setMeals(res.data)
           console.log(res.data)
-          const datesList = res.data.map(m => new Date(m.date).toLocaleDateString())
+          const datesList = res.data.sort((a, b) => new Date(b.date) - new Date(a.date)).map(m => new Date(m.date).toLocaleDateString())
           setDates([...new Set(datesList)])
         })
         .catch(err => console.log(err.response))
