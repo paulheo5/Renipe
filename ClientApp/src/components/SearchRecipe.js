@@ -54,7 +54,8 @@ const SearchRecipe = () => {
                 {results.map(result => (
                  
                     <span key={result.id}>
-                        <ul className='cards__recipe'>
+                        <div className='cards__recipecontainer'>
+                       
                            
 
                             <CardItem id={result.id}
@@ -64,7 +65,8 @@ const SearchRecipe = () => {
                                                 path='/RecipeInfo'
                                             />
                           
-                                </ul>
+                         
+                        </div>
                         </span>
                    
                             

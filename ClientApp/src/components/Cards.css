@@ -22,15 +22,16 @@ h1 {
   width: 100%;
   margin: 0 auto;
 }
+.itemContainer {
+  max-width: 375px;
+  margin: 1rem auto;
+  padding: 2rem;
+}
 
 .cards__recipecontainer {
-    display: flex;
-    max-height: 500px;
-    flex-flow: row;
-    max-width: 1000px;
-    width: 100%;
-
-
+    max-width: 575px;
+    margin: 1rem auto;
+    padding: 2rem;
 }
 
 .cards__wrapper {

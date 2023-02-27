@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import '../components/App.css';
 import { Button } from './Button';
 import './HeroSection.css';
+import { useNavigate } from 'react-router-dom';
 
 function HeroSection() {
     //const [show, setShow] = useState(false)
     const searchBox = document.querySelector(".search-box");
+    const navigate = useNavigate();
 
   return (
       <div className='hero-container'>
@@ -18,7 +20,7 @@ function HeroSection() {
           className='btns'
           buttonStyle='btn--outline'
           buttonSize='btn--large'
-          onClick={()=> input}
+          onClick={()=> navigate('/AddMeal')}
         >
           Track a meal
         </Button>
@@ -26,16 +28,13 @@ function HeroSection() {
           className='btns'
           buttonStyle='btn--primary'
           buttonSize='btn--large'
-          //onClick={() => setShow(!show)}
+          onClick={() => navigate('/SearchRecipe')}
         >
           Start cooking <i className='far fa-play-circle' />
               </Button>
         
           </div>
-          <div className='search-box'>
-              <input type= "text" placeholder="Enter..."/>
-              
-          </div>
+       
     </div>
   );
 }
