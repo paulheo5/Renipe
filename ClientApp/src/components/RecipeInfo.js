@@ -135,10 +135,11 @@ const RecipeInfo = () => {
 
                 </article>
 
-                <div style={{ flexDirection: "row" }}>
+                <div style={{ flexDirection: "row"}}>
           
-                    <Button className='btn' onClick={() => setHide(!hide)}>Nutrition Info</Button>
-                    <Button onClick={handleSubmit } >Save this!</Button>
+                    <Button className='btn' buttonStyle='btn--outline2' onClick={() => setHide(!hide)}>Nutrition Info</Button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <Button  clssName = 'btn' buttonStyle='btn--outline2' onClick={handleSubmit } >Save this</Button>
 
                 </div>
             <table className="table" hidden={hide} >
