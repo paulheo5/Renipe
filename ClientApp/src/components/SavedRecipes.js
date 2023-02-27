@@ -18,7 +18,6 @@ const Saved = () => {
 
     useEffect(() => {
         savedRecipe()
-     
     }, [])
     //function clickDelete(food){
     //    const result = confirm(`Are you sure you want to delete ${food.title}?`)
@@ -54,11 +53,12 @@ const Saved = () => {
                                 <td style={style}>
                                     <button className='btn btn-danger text-light' onClick={() => {
                                         const result = confirm(`Are you sure you want to delete ${recipes.title}?`)
+                                        const updatedRecipeList = recipe.filter(r => r.id !== recipes.id)
                                         if (result) {
                                             deleteRecipe(recipes.id)
                                                 .then(() => {
                                            
-                                                    setRecipe(recipes.filter(r => r.id !== recipes.id))
+                                                    setRecipe(updatedRecipeList)
                                               
                                                 })
                                                 .catch(err => console.log(err.response))
