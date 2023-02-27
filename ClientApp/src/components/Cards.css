@@ -1,3 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;600&display=swap");
+
+
+
+
 .cards {
   padding: 4rem;
   background: #fff;
@@ -11,7 +16,8 @@
 }
 
 h1 {
-  text-align: center;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
 }
 
 .cards__container {
