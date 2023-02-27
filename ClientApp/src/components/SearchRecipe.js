@@ -61,7 +61,7 @@ const SearchRecipe = () => {
                             <CardItem id={result.id}
                                                 src={result.image}
                                                 text={result.title}
-                                                label={result.likes }
+                                                label={`${result.likes} ${String.fromCodePoint('0x1F497')}`} 
                                                 path='/RecipeInfo'
                                             />
                           
