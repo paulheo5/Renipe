@@ -4,7 +4,8 @@ import { recipeInfo } from '../services/Spoonacular'
 import NutritionFacts from './NutritionFacts'
 import styles from './RecipeInfo.css';
 import { Button } from './Button';
-import { trackRecipe, updateRecipe, deleteRecipe } from '../services/SavedRecipes'
+import { trackRecipe, updateRecipe, deleteRecipe } from '../services/SavedRecipes';
+import { useNavigate } from 'react-router-dom';
 
 
 const RecipeInfo = () => {
@@ -18,7 +19,9 @@ const RecipeInfo = () => {
     
     const [hide, setHide] = useState(true);
 
-    const[servingSize, setServingSize] = useState("")
+    const [servingSize, setServingSize] = useState("")
+
+    const navigate = useNavigate();
 
 
     
@@ -42,9 +45,15 @@ const RecipeInfo = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        trackRecipe(recipe).then(res => {
-            consol.log(res.data);
-            navigate('/SavedRecipes');
+        const savedRecipe = {
+            "recipeId": info.id,
+            "title": info.title,
+            "sourceUrl": info.sourceUrl
+        }
+        console.log(savedRecipe)
+        trackRecipe(savedRecipe).then(res => {
+            console.log(res.data)
+            navigate('/SavedRecipes')
         }).catch(err => console.log(err.response))
     }
 

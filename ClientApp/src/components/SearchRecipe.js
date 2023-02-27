@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { searchSpoon } from '../services/Spoonacular'
 import './Cards.css';
 import CardItem from '../components/CardItem';
-import { useNavigate } from 'react-router-dom'
+
 
 const SearchRecipe = () => {
 
@@ -47,14 +47,15 @@ const SearchRecipe = () => {
             </form>
             </div>
 
-            <div className="col-md-3 mb-1 p-3 d-flex justify-content-center">
+            <div>
 
 
                   
                 {results.map(result => (
-                    <div>
+                 
                     <span key={result.id}>
-                            <div>
+                        <ul className='cards__recipe'>
+                           
 
                             <CardItem id={result.id}
                                                 src={result.image}
@@ -62,10 +63,10 @@ const SearchRecipe = () => {
 
                                                 path='/RecipeInfo'
                                             />
-                            
-                                </div>
+                          
+                                </ul>
                         </span>
-                        </div>
+                   
                             
                             
                             
