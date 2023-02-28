@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { searchFdc } from '../services/Fdc'
 import NutritionFacts from './NutritionFacts'
+import NutritionFactsTable from './NutritionFactsTable'
 
 const AddMeal = () => {
 
@@ -128,32 +129,7 @@ const AddMeal = () => {
         {results.length > 0 ?
         <>
         {pageListElement}
-        <table className='table table-striped'>
-            <thead>
-            <tr style={style} className='bg-dark'>
-                <th style={style} className='text-light'>Name</th>
-                <th style={style} className='text-light'>Calories</th>
-                <th style={style} className='text-light'>Carbohydrates</th>
-                <th style={style} className='text-light'>Protein</th>
-                <th style={style} className='text-light'>Fat</th>
-                <th style={style} className='text-light'>Phosphorus</th>
-                <th style={style} className='text-light'>Potassium</th>
-                <th style={style} className='text-light'>Sodium</th>
-                <th style={{...style, 'width':'8em'}} className='text-light'>Serving Size</th>
-                <th style={{...style, 'width':'8em'}} className='text-light'>Serving Unit</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-        {results.map(food =>{
-            return(
-                <React.Fragment key={food.id}>
-                    <NutritionFacts food={food} style={style} />
-                </React.Fragment>
-            )
-        })}
-        </tbody>
-        </table>
+        <NutritionFactsTable meals={results} style={style} />
         {pageListElement}
         </>
         :<></>}

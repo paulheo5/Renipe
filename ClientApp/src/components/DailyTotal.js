@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import NutritionFacts from './NutritionFacts.js';
+import NutritionFactsTable from './NutritionFactsTable.js';
 
 const DailyTotal = ({meals, mealsList, setMealsList, style}) => {
 
@@ -29,34 +30,7 @@ const DailyTotal = ({meals, mealsList, setMealsList, style}) => {
         {!hide ?
         <tr>
           <td colSpan={9}>
-            <table className='table table-striped'>
-              <thead>
-                  <tr className='bg-dark'>
-                      <th className='text-light' style={style}>Name</th>
-                      <th className='text-light' style={style}>Calories</th>
-                      <th className='text-light' style={style}>Carbohydrates</th>
-                      <th className='text-light' style={style}>Protein</th>
-                      <th className='text-light' style={style}>Fat</th>
-                      <th className='text-light' style={style}>Phosphorus</th>
-                      <th className='text-light' style={style}>Potassium</th>
-                      <th className='text-light' style={style}>Sodium</th>
-                      <th className='text-light' style={{...style, 'width':'8em'}}>Serving Size</th>
-                      <th className='text-light' style={{...style, 'width':'8em'}}>Serving Unit</th>
-                      <th className='text-light' style={style}>Servings</th>
-                      <th className='text-light' style={style}>Date</th>
-                      <th className='text-light' ></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {meals.map(meal => {
-                    return(
-                    <React.Fragment key={meal.mealId}>
-                      <NutritionFacts food={meal} mealView={true} meals={mealsList} setMeals={setMealsList} style={style} />
-                    </React.Fragment>
-                    )
-                  })}
-                </tbody>
-            </table>
+            <NutritionFactsTable mealsLocal={meals} meals={mealsList} setMeals={setMealsList} totalView={true} mealView={true} style={style} />
           </td>
         </tr>
         :

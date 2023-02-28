@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getMeals } from '../services/Meals';
 import {Link} from 'react-router-dom';
 import NutritionFacts from './NutritionFacts';
+import NutritionFactsTable from './NutritionFactsTable';
 
 const Meals = () => {
     const [meals, setMeals] = useState([]);
@@ -26,35 +27,7 @@ const Meals = () => {
 
     return (
         <>
-            <table className="table table-striped">
-                <thead>
-                <tr className='bg-dark'>
-                    <th className='text-light' style={style}>Name</th>
-                    <th className='text-light' style={style}>Calories</th>
-                    <th className='text-light' style={style}>Carbohydrates</th>
-                    <th className='text-light' style={style}>Protein</th>
-                    <th className='text-light' style={style}>Fat</th>
-                    <th className='text-light' style={style}>Phosphorus</th>
-                    <th className='text-light' style={style}>Potassium</th>
-                    <th className='text-light' style={style}>Sodium</th>
-                    <th className='text-light' style={{...style, 'width':'8em'}}>Serving Size</th>
-                    <th className='text-light' style={{...style, 'width':'8em'}}>Serving Unit</th>
-                    <th className='text-light' style={style}>Servings</th>
-                    <th className='text-light' style={style}>Date</th>
-                    <th className='text-light' ></th>
-                </tr>
-                </thead>
-                <tbody>
-                {meals.map(meal => {
-                    return (
-                        <React.Fragment key={meal.mealId}>
-                            <NutritionFacts food={meal} mealView={true} style={style} meals={meals} setMeals={setMeals} />
-                        </React.Fragment>
-                    )
-                })}
-                </tbody>
-            </table>
-            <Link to='/AddMeal'><button className='btn btn-success'>Create</button></Link>
+            <NutritionFactsTable meals={meals} setMeals={setMeals} mealView={true} style={style} />
         </>
         )
 
