@@ -51,7 +51,7 @@ const DailyView = () => {
                 {mealsByDate.filter(m => m.length > 0).map(d =>{
                     return(
                     <React.Fragment key={d[0].date}>
-                        <DailyTotal style={style} meals={d} setMeals={setMeals} dates={dates} setDates={setDates} />
+                        <DailyTotal style={style} meals={d} mealsList={meals} setMealsList={setMeals} />
                     </React.Fragment>
                     )
                 })}
