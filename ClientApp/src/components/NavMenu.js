@@ -35,7 +35,25 @@ function Navbar() {
                         <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
                     </div>
                     <ul className={click ? 'nav-menu active' : 'nav-menu'}>
+                        <li className='nav-item'>
+                            <Link
+                                to='/AddMeal'
+                                className='nav-links'
+                                onClick={closeMobileMenu}
+                            >
+                                Add Meal
+                            </Link>
+                        </li>
                   
+                        <li className='nav-item'>
+                            <Link
+                                to='/SearchRecipe'
+                                className='nav-links'
+                                onClick={closeMobileMenu}
+                            >
+                                Search Recipes
+                            </Link>
+                        </li>
                         <li className='nav-item'>
                             <Link
                                 to='/Meals'
@@ -52,24 +70,6 @@ function Navbar() {
                                 onClick={closeMobileMenu}
                             >
                                 Recipes
-                            </Link>
-                        </li>
-                        <li className='nav-item'>
-                            <Link
-                                to='/AddMeal'
-                                className='nav-links'
-                                onClick={closeMobileMenu}
-                            >
-                                Add Meal
-                            </Link>
-                        </li>
-                        <li className='nav-item'>
-                            <Link
-                                to='/SearchRecipe'
-                                className='nav-links'
-                                onClick={closeMobileMenu}
-                            >
-                                Search Recipes
                             </Link>
                         </li>
                         <li className='nav-item'>

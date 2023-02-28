@@ -28,14 +28,15 @@ const RecipeInfo = () => {
     
     const retrieveMeals = (id) => {
         recipeInfo(id)
-        .then(res => {
+            .then(res => {
+            console.log(res.data);
             setInfo(res.data);
             setNutrients(res.data.nutrition.nutrients);
+            setIngredients(res.data.extendedIngredients);
             setSteps(res.data.analyzedInstructions[0].steps);
-            setIngredients(res.data.extendedIngredients)
             setServingSize(res.data.nutrition.weightPerServing.amount + res.data.nutrition.weightPerServing.unit);
             console.log(res.data.analyzedInstructions[0].steps);
-            console.log(res.data);
+            
         })
         .catch(err => console.log(err.response))
     }
@@ -89,7 +90,7 @@ const RecipeInfo = () => {
         "servingSizeUnit" : servingSizeUnit,
         "date" : new Date(`${defaultMonth}-${defaultDate}-${defaultYear}`)
     }
-
+    console.log(ingredients);
     return (
         <>
             <div className='dish'>  
