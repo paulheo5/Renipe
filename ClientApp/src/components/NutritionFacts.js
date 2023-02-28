@@ -16,23 +16,24 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
     }
 
     const [hide, setHide] = useState(true)
+
     
     const initialValues = {
-            "mealId" : food.mealId,
-            "foodName" : food.foodName,
-            "caloriesPerServing" : Math.round(food.caloriesPerServing),
-            "carbohydratesPerServing" : Math.round(food.carbohydratesPerServing),
-            "proteinPerServing" : Math.round(food.proteinPerServing),
-            "fatPerServing" : Math.round(food.fatPerServing),
-            "phosphorusPerServing" : Math.round(food.phosphorusPerServing),
-            "potassiumPerServing" : Math.round(food.potassiumPerServing),
-            "sodiumPerServing" : Math.round(food.sodiumPerServing),
-            "date" : new Date(food.date),
-            "servings" : food.servings ?? 1,
-            "servingSize" : food.servingSize,
-            "servingSizeUnit" : food.servingSizeUnit ?? ""
+        "mealId" : food.mealId,
+        "foodName" : food.foodName,
+        "caloriesPerServing" : Math.round(food.caloriesPerServing),
+        "carbohydratesPerServing" : Math.round(food.carbohydratesPerServing),
+        "proteinPerServing" : Math.round(food.proteinPerServing),
+        "fatPerServing" : Math.round(food.fatPerServing),
+        "phosphorusPerServing" : Math.round(food.phosphorusPerServing),
+        "potassiumPerServing" : Math.round(food.potassiumPerServing),
+        "sodiumPerServing" : Math.round(food.sodiumPerServing),
+        "date" : new Date(food.date),
+        "servings" : food.servings ?? 1,
+        "servingSize" : food.servingSize,
+        "servingSizeUnit" : food.servingSizeUnit ?? ""
     }    
-
+    
     const year = new Date().getFullYear();
     const month = (initialValues.date.getMonth() > 9) ? initialValues.date.GetMonth() + 1 : "0" + (initialValues.date.getMonth() + 1).toString()
     const dateDay = (initialValues.date.getDate() > 9) ? initialValues.date.getDate() : "0" + initialValues.date.getDate().toString()
@@ -109,6 +110,7 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
             {mealView ? <>
                 <td style={style}>{meal.servings}</td>
                 <td style={style}>{`${new Date(meal.date).getMonth() + 1}/${new Date(meal.date).getUTCDate()}/${new Date(meal.date).getFullYear()}`}</td>
+                {/* <td style={style}>{new Date(meal.date).toLocaleDateString()}</td> */}
                 <td style={{"width":"14em"}}>
                     <button className='btn btn-danger text-light'onClick={clickDelete}>Delete</button>
                     <button style={{"marginLeft":"1em"}} className='btn btn-warning text-dark' onClick={() => setHide(!hide)}>Update</button>

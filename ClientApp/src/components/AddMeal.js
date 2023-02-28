@@ -84,6 +84,10 @@ const AddMeal = () => {
         const fullServingSize = servingSize + servingSizeUnit
         const servingSizeHousehold = food.householdServingFullText
 
+        const defaultMonth = `${new Date().getMonth() + 1}`
+        const defaultDate = `${new Date().getDate()}`
+        const defaultYear = `${new Date().getFullYear()}`
+
         if(caloriesPerServing === -1){
             caloriesPerServing = Math.round((4 * carbohydratesPerServing + proteinPerServing) + (9 * fatPerServing))
         }
@@ -100,7 +104,7 @@ const AddMeal = () => {
             "sodiumPerServing" : sodiumPerServing,
             "servingSize" : fullServingSize,
             "servingSizeUnit" : servingSizeHousehold,
-            "date" : new Date()
+            "date" : new Date(`${defaultMonth}-${defaultDate}-${defaultYear}`)
         })
     }
 
