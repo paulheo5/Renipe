@@ -4,7 +4,7 @@ import NutritionFactsTable from './NutritionFactsTable.js';
 
 const DailyTotal = ({meals, mealsList, setMealsList, style}) => {
 
-    const date = new Date(meals[0].date).toLocaleDateString();
+    const date = `${new Date(meals[0].date).getMonth() + 1}/${new Date(meals[0].date).getUTCDate()}/${new Date(meals[0].date).getFullYear()}`
     const totalCalories = meals.map(m => Math.round(m.caloriesPerServing * m.servings)).reduce(((a, b) => a + b), 0)
     const totalCarbohydrates = meals.map(m => Math.round(m.carbohydratesPerServing * m.servings)).reduce(((a, b) => a + b), 0)
     const totalProtein = meals.map(m => Math.round(m.proteinPerServing * m.servings)).reduce(((a, b) => a + b), 0)
