@@ -3,8 +3,8 @@ import { getMeals } from '../services/Meals';
 import {Link} from 'react-router-dom';
 import NutritionFacts from './NutritionFacts';
 
-const Meals = ({mealsList = [], setMealsList}) => {
-    const [meals, setMeals] = useState(mealsList);
+const Meals = () => {
+    const [meals, setMeals] = useState([]);
     
     const retrieveMeals = () => {
         getMeals()
@@ -19,9 +19,7 @@ const Meals = ({mealsList = [], setMealsList}) => {
     }
 
     useEffect(() => {
-        if(mealsList.length < 1){
             retrieveMeals()
-        }
     },[])
 
     const style = {"padding":"3px", "paddingLeft":"10px", "paddingRight":"10px"}
@@ -46,13 +44,15 @@ const Meals = ({mealsList = [], setMealsList}) => {
                     <th className='text-light' ></th>
                 </tr>
                 </thead>
+                <tbody>
                 {meals.map(meal => {
                     return (
                         <React.Fragment key={meal.mealId}>
-                            <NutritionFacts food={meal} mealView={true} style={style} meals={meals} setMeals={setMeals} setMealsList={setMealsList} />
+                            <NutritionFacts food={meal} mealView={true} style={style} meals={meals} setMeals={setMeals} />
                         </React.Fragment>
                     )
                 })}
+                </tbody>
             </table>
             <Link to='/AddMeal'><button className='btn btn-success'>Create</button></Link>
         </>
