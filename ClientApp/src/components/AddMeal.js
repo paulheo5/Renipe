@@ -144,6 +144,7 @@ const AddMeal = () => {
                 <th></th>
             </tr>
             </thead>
+            <tbody>
         {results.map(food =>{
             return(
                 <React.Fragment key={food.id}>
@@ -151,6 +152,7 @@ const AddMeal = () => {
                 </React.Fragment>
             )
         })}
+        </tbody>
         </table>
         {pageListElement}
         </>
