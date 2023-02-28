@@ -17,7 +17,7 @@ const DailyTotal = ({meals, mealsList, setMealsList, style}) => {
   return (
     <>
       <tr>
-        <td style={{...style, "width":"12em"}} >{date}</td>
+        <td style={{...style, "width":"17em"}} >{date}</td>
         <td style={{...style, "width":"8em"}} >{totalCalories}</td>
         <td style={{...style, "width":"13em"}} >{totalCarbohydrates}</td>
         <td style={{...style, "width":"7em"}} >{totalProtein}</td>

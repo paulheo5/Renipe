@@ -8,7 +8,11 @@ const NutritionFactsTable = ({mealsLocal, meals, setMeals, style, mealView, tota
         <table className="table table-striped">
             <thead>
                 <tr className='bg-dark'>
+                    {totalView ?
+                    <th className='text-light' style={{...style,"width":"16.5em"}}></th>
+                    :
                     <th className='text-light' style={style}>Name</th>
+                    }
                     <th className='text-light' style={style}>Calories</th>
                     <th className='text-light' style={style}>Carbohydrates</th>
                     <th className='text-light' style={style}>Protein</th>
