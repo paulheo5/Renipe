@@ -148,7 +148,11 @@ const RecipeInfo = () => {
                     <Button  clssName = 'btn' buttonStyle='btn--outline2' onClick={handleSubmit } >Save this</Button>
 
                 </div>
-            <NutritionFactsTable meals={[food]} />
+                {hide ?
+                <></>
+                :
+                <NutritionFactsTable meals={[food]} />
+                }
          
 
             </div>
