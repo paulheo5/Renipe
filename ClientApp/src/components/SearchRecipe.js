@@ -29,16 +29,6 @@ const SearchRecipe = () => {
 
             .catch(err => console.log(err.response))
     }
-    //useEffect(() => {
-    //    search();
-    //}, []);
-
-//    React.useEffect(() => {
-//    console.log("Side Effect")
-//    window.localStorage.setItem("name", name)
-//}, [name]);
-
-
     return (
         <>
         <div>

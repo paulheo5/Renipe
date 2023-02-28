@@ -5,7 +5,6 @@ import './HeroSection.css';
 import { useNavigate } from 'react-router-dom';
 
 function HeroSection() {
-    //const [show, setShow] = useState(false)
     const searchBox = document.querySelector(".search-box");
     const navigate = useNavigate();
 
