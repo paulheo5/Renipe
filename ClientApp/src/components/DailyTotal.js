@@ -19,12 +19,12 @@ const DailyTotal = ({meals, mealsList, setMealsList, style}) => {
       <tr>
         <td style={{...style, "width":"17em"}} >{date}</td>
         <td style={{...style, "width":"7.5em"}} >{totalCalories}</td>
-        <td style={{...style, "width":"11.5em"}} >{totalCarbohydrates}</td>
-        <td style={{...style, "width":"6.5em"}} >{totalProtein}</td>
-        <td style={{...style, "width":"4.5em"}} >{totalFat}</td>
-        <td style={{...style, "width":"10em"}} className={totalPhosphorus > 800 ? "text-danger" : ""}>{totalPhosphorus}</td>
-        <td style={{...style, "width":"8.5em"}} className={totalPotassium > 3000 ? "text-danger" : ""} >{totalPotassium}</td>
-        <td style={style} className={totalSodium > 3000 ? "text-danger" : ""}>{totalSodium}</td>
+        <td style={{...style, "width":"11.5em"}} >{totalCarbohydrates}g</td>
+        <td style={{...style, "width":"6.5em"}} >{totalProtein}g</td>
+        <td style={{...style, "width":"4.5em"}} >{totalFat}g</td>
+        <td style={{...style, "width":"10em"}} className={totalPhosphorus > 800 ? "text-danger" : ""}>{totalPhosphorus}mg</td>
+        <td style={{...style, "width":"8.5em"}} className={totalPotassium > 3000 ? "text-danger" : ""} >{totalPotassium}mg</td>
+        <td style={style} className={totalSodium > 3000 ? "text-danger" : ""}>{totalSodium}mg</td>
         <td><button className='btn btn-primary' onClick={() => setHide(!hide)}>Details</button></td>
       </tr>
         {!hide ?
