@@ -67,7 +67,8 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
             updateMeal(meal.mealId, meal)
             .then(() => {
                 const updatedMeals = meals.filter(m => m.mealId !== meal.mealId)
-                setMeals([...updatedMeals, meal])
+                const AddedBackMeals = [...updatedMeals, meal].sort((a, b) => new Date(b.date) - new Date(a.date))
+                setMeals(AddedBackMeals)
                 setHide(!hide)
             })
             .catch(err => console.log(err.response))
@@ -107,7 +108,7 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
         <td style={style}>{meal.servingSizeUnit}</td>
             {mealView ? <>
                 <td style={style}>{meal.servings}</td>
-                <td style={style}>{new Date(meal.date).toLocaleDateString()}</td>
+                <td style={style}>{`${new Date(meal.date).getMonth() + 1}/${new Date(meal.date).getUTCDate()}/${new Date(meal.date).getFullYear()}`}</td>
                 <td style={{"width":"14em"}}>
                     <button className='btn btn-danger text-light'onClick={clickDelete}>Delete</button>
                     <button style={{"marginLeft":"1em"}} className='btn btn-warning text-dark' onClick={() => setHide(!hide)}>Update</button>
