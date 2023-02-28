@@ -6,6 +6,7 @@ import styles from './RecipeInfo.css';
 import { Button } from './Button';
 import { trackRecipe } from '../services/SavedRecipes';
 import { useNavigate } from 'react-router-dom';
+import NutritionFactsTable from './NutritionFactsTable';
 
 
 const RecipeInfo = () => {
@@ -69,8 +70,12 @@ const RecipeInfo = () => {
 
     calories = calories === -1 ? (4*(carbohydrates + protein)) + (9 * fat) : calories;
 
+    const defaultMonth = `${new Date().getMonth() + 1}`
+    const defaultDate = `${new Date().getDate()}`
+    const defaultYear = `${new Date().getFullYear()}`
 
     const food = {
+        "id" : recipeid,
         "foodName" : foodName,
         "caloriesPerServing" : calories,
         "carbohydratesPerServing" : isNaN(carbohydrates) ? 0 : carbohydrates,
@@ -81,7 +86,7 @@ const RecipeInfo = () => {
         "sodiumPerServing" : isNaN(sodium) ? 0 : sodium,
         "servingSize" : servingSize,
         "servingSizeUnit" : servingSizeUnit,
-        "date" : new Date()
+        "date" : new Date(`${defaultMonth}-${defaultDate}-${defaultYear}`)
     }
 
     return (
@@ -138,28 +143,11 @@ const RecipeInfo = () => {
                 <div style={{ flexDirection: "row"}}>
           
                     <Button className='btn' buttonStyle='btn--outline2' onClick={() => setHide(!hide)}>Nutrition Info</Button>
-                    &nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Button  clssName = 'btn' buttonStyle='btn--outline2' onClick={handleSubmit } >Save this</Button>
 
                 </div>
-            <table className="table" hidden={hide} >
-                <thead>
-                   <tr className='bg-dark'>
-                        <th className='text-light'>Name</th>
-                        <th className='text-light'>Calories</th>
-                        <th className='text-light'>Carbohydrates</th>
-                        <th className='text-light'>Protein</th>
-                        <th className='text-light'>Fat</th>
-                        <th className='text-light'>Phosphorus</th>
-                        <th className='text-light'>Potassium</th>
-                        <th className='text-light'>Sodium</th>
-                        <th className='text-light' style={{'width':'8em'}}>Serving Size</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <NutritionFacts food={food} />
-                    </table>
+            <NutritionFactsTable meals={[food]} />
          
 
             </div>
