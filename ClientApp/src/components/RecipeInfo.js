@@ -49,7 +49,8 @@ const RecipeInfo = () => {
         const savedRecipe = {
             "recipeId": info.id,
             "title": info.title,
-            "sourceUrl": info.sourceUrl
+            "sourceUrl": info.sourceUrl,
+            "image": info.image
         }
         console.log(savedRecipe)
         trackRecipe(savedRecipe).then(res => {

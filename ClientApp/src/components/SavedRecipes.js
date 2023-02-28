@@ -6,6 +6,9 @@ import { useNavigate } from 'react-router-dom';
 
 const Saved = () => {
     const [recipe, setRecipe] = useState([]);
+
+    const [hide, setHide] = useState(true);
+
     const savedRecipe = () => {
         getRecipe().then(res => {
             setRecipe(res.data)
@@ -37,7 +40,9 @@ const Saved = () => {
                         <tbody>
                             <tr>
                                 <td style={style}>{recipes.title}</td>
-                                <td style={style}>{recipes.sourceUrl}</td>
+                                    <td style={style}>
+                                        <a href={recipes.sourceUrl}> {recipes.sourceUrl}</a>
+                                        </td>
                                 <td style={style}>
                                     <button className='btn btn-primary text-light' onClick = {() => {
                                         window.localStorage.setItem("id", recipes.recipeId)
