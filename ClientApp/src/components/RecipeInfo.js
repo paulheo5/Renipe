@@ -48,7 +48,8 @@ const RecipeInfo = () => {
         const savedRecipe = {
             "recipeId": info.id,
             "title": info.title,
-            "sourceUrl": info.sourceUrl
+            "sourceUrl": info.sourceUrl,
+            "image": info.image
         }
         console.log(savedRecipe)
         trackRecipe(savedRecipe).then(res => {
@@ -138,7 +139,7 @@ const RecipeInfo = () => {
                 <div style={{ flexDirection: "row"}}>
           
                     <Button className='btn' buttonStyle='btn--outline2' onClick={() => setHide(!hide)}>Nutrition Info</Button>
-                    &nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Button  clssName = 'btn' buttonStyle='btn--outline2' onClick={handleSubmit } >Save this</Button>
 
                 </div>
