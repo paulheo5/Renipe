@@ -49,7 +49,11 @@ const NutritionFactsTable = ({mealsLocal, meals, setMeals, style, mealView, tota
                 }
             </tbody>
             </table>
+            {(mealView && !totalView)?
             <Link to='/AddMeal'><button className='btn btn-success'>Create</button></Link>
+            :
+            <></>
+            }
         </>
   )
 }
