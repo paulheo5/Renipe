@@ -6,9 +6,6 @@ import { useNavigate } from 'react-router-dom';
 
 const Saved = () => {
     const [recipe, setRecipe] = useState([]);
-
-    const [hide, setHide] = useState(true);
-
     const savedRecipe = () => {
         getRecipe().then(res => {
             setRecipe(res.data)

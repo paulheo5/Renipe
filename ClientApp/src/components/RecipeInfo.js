@@ -2,7 +2,6 @@
 import { useState } from 'react'
 import { recipeInfo } from '../services/Spoonacular'
 import NutritionFacts from './NutritionFacts'
-import styles from './RecipeInfo.css';
 import { Button } from './Button';
 import { trackRecipe } from '../services/SavedRecipes';
 import { useNavigate } from 'react-router-dom';
