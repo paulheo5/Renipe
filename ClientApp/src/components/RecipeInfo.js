@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { recipeInfo } from '../services/Spoonacular'
 import NutritionFacts from './NutritionFacts'
+import styles from './RecipeInfo.css';
 import { Button } from './Button';
 import { trackRecipe } from '../services/SavedRecipes';
 import { useNavigate } from 'react-router-dom';
@@ -137,7 +138,7 @@ const RecipeInfo = () => {
                 <div style={{ flexDirection: "row"}}>
           
                     <Button className='btn' buttonStyle='btn--outline2' onClick={() => setHide(!hide)}>Nutrition Info</Button>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;
                     <Button  clssName = 'btn' buttonStyle='btn--outline2' onClick={handleSubmit } >Save this</Button>
 
                 </div>

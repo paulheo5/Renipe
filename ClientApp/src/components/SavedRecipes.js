@@ -20,20 +20,6 @@ const Saved = () => {
 
     const navigate = useNavigate();
 
-    //function clickDelete(food){
-    //    const result = confirm(`Are you sure you want to delete ${food.title}?`)
-    //    if (result) {
-    //        deleteRecipe(food.id)
-    //            .then(() => {
-    //                const updatedRecipe = recipe.filter(m => m.id != food.id)
-    //                setRecipe(updatedRecipe)
-    //            })
-    //            .catch(err => console.log(err.response))
-    //    }
-
-
-    //}
-
     const style = { "padding": "3px", "paddingLeft": "10px", "paddingRight": "10px" }
     return (
         <>
