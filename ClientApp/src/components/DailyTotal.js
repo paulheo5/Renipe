@@ -17,13 +17,13 @@ const DailyTotal = ({meals, mealsList, setMealsList, style}) => {
   return (
     <>
       <tr>
-        <td style={{...style, "width":"14em"}} >{date}</td>
-        <td style={{...style, "width":"5em"}} >{totalCalories}</td>
-        <td style={{...style, "width":"6em"}} >{totalCarbohydrates}</td>
-        <td style={{...style, "width":"4em"}} >{totalProtein}</td>
-        <td style={{...style, "width":"3em"}} >{totalFat}</td>
-        <td style={{...style, "width":"7em"}} className={totalPhosphorus > 800 ? "text-danger" : ""}>{totalPhosphorus}</td>
-        <td style={{...style, "width":"5em"}} className={totalPotassium > 3000 ? "text-danger" : ""} >{totalPotassium}</td>
+        <td style={{...style, "width":"12em"}} >{date}</td>
+        <td style={{...style, "width":"8em"}} >{totalCalories}</td>
+        <td style={{...style, "width":"13em"}} >{totalCarbohydrates}</td>
+        <td style={{...style, "width":"7em"}} >{totalProtein}</td>
+        <td style={{...style, "width":"4.5em"}} >{totalFat}</td>
+        <td style={{...style, "width":"10.5em"}} className={totalPhosphorus > 800 ? "text-danger" : ""}>{totalPhosphorus}</td>
+        <td style={{...style, "width":"10em"}} className={totalPotassium > 3000 ? "text-danger" : ""} >{totalPotassium}</td>
         <td style={style} className={totalSodium > 3000 ? "text-danger" : ""}>{totalSodium}</td>
         <td><button className='btn btn-primary' onClick={() => setHide(!hide)}>Details</button></td>
       </tr>
