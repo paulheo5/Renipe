@@ -12,6 +12,7 @@ namespace Renipe.DataContext
  
         public DbSet<SavedRecipe> Recipes { get; set; }
         public DbSet<Meal> NutritionData { get; set; }
+        public DbSet<User> Users { get; set; }
 
     }
 }
