@@ -2,11 +2,10 @@
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import './SignIn.css';
-import axios from 'axios';
+import { register } from "../services/Auth";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = '/register';
 
 const Register = () => {
     const userRef = useRef();
@@ -53,47 +52,34 @@ const Register = () => {
             setErrMsg("Invalid Entry");
             return;
         }
-        try {
-            const response = await axios.post(REGISTER_URL,
-                JSON.stringify({ user, pwd }),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                }
-            );
-         
-            console.log(JSON.stringify(response?.data));
-            //console.log(JSON.stringify(response))
-            setSuccess(true);
 
+        const userObj = {"username":user, "password":pwd}
+        await register(userObj)
+        .then(res => {
+            console.log(res.data);
+            setSuccess(true);
             setUser('');
             setPwd('');
             setMatchPwd('');
-        } catch (err) {
-            if (!err?.response) {
-                setErrMsg('No Server Response');
-            } else if (err.response?.status === 409) {
-                setErrMsg('Username Taken');
-            } else {
-                setErrMsg('Registration Failed')
-            }
+        })
+        .catch(err => {
+            setErrMsg(err.response.data ?? "No response");
             errRef.current.focus();
-        }
+        });
     }
 
     return (
         <>
-
             
             {success ? (
-                <section>
+                <section style={{"width":"auto","marginLeft":"auto","marginRight":"auto", "backgroundColor":"dodgerblue"}}>
                     <h1>Success!</h1>
                     <p>
                         <a href="#">Sign In</a>
                     </p>
                 </section>
             ) : (
-                <section>
+                <section style={{"width":"auto","marginLeft":"auto","marginRight":"auto", "backgroundColor":"dodgerblue"}}>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                     <h1>Register</h1>
                     <form onSubmit={handleSubmit}>
@@ -180,7 +166,6 @@ const Register = () => {
                         </section>
 
                 )}
-
         </>
     )
 }
