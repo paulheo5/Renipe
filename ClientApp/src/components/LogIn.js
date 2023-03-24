@@ -29,14 +29,15 @@ const Login = () => {
         await login(userObj)
             .then(res => {
                 console.log(res.data);
-                const accessToken = response?.data?.accessToken;
-                const roles = response?.data?.roles;
-                setAuth({ user, pwd, roles, accessToken });
+                //no roles, no data.access token returned
+                //const accessToken = response?.data?.accessToken;
+                //const roles = response?.data?.roles;
+                //setAuth({ user, pwd, roles, accessToken });
+                //TODO: save token response to local storage
                 setSuccess(true);
                 setUser('');
                 setPwd('');
             })
-         
             .catch(err => {
                 setErrMsg(err.response.data ?? "No response");
                 errRef.current.focus();
