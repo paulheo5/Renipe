@@ -160,7 +160,7 @@ const Register = () => {
                         Already registered?<br />
                         <span className="line">
                             {/*put router link here*/}
-                            <a href="#">Sign In</a>
+                            <a href="/LogIn">Sign In</a>
                         </span>
                     </p>
                         </section>
