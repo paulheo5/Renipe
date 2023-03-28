@@ -27,7 +27,7 @@
     padding: 1rem 0.5rem;
 }
 
-section {
+.signin-section {
     width: 100%;
     max-width: 420px;
     min-height: 400px;
@@ -38,7 +38,7 @@ section {
     background-color: rgba(0,0,0,0.4);
 }
 
-form {
+.signin-form {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -52,7 +52,7 @@ a, a:visited {
 
 input[type="text"],
 input[type="password"],
-button,
+.signin-button,
 textarea {
     font-family: 'Nunito', sans-serif;
     font-size: 22px;
@@ -61,11 +61,11 @@ textarea {
 }
 
 label,
-button {
+.signin-button {
     margin-top: 1rem;
 }
 
-button {
+.signin-button {
     padding: 0.5rem;
 }
 

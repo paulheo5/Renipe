@@ -2,6 +2,7 @@
 import AuthContext from "../services/LogAuth";
 import { login } from "../services/Auth";
 import './SignIn.css';
+import { Link } from 'react-router-dom';
 //import axios from './api/axios';
 //const LOGIN_URL = '/auth';
 
@@ -29,10 +30,6 @@ const Login = () => {
         await login(userObj)
             .then(res => {
                 console.log(res.data);
-                //no roles, no data.access token returned
-                //const accessToken = response?.data?.accessToken;
-                //const roles = response?.data?.roles;
-                //setAuth({ user, pwd, roles, accessToken });
                 //TODO: save token response to local storage
                 setSuccess(true);
                 setUser('');
@@ -47,7 +44,7 @@ const Login = () => {
     return (
         <>
             {success ? (
-                <section style={{ "width": "auto", "marginLeft": "auto", "marginRight": "auto", "backgroundColor": "dodgerblue" }}>
+                <section className='signin-section' style={{ "width": "auto", "marginLeft": "auto", "marginRight": "auto", "backgroundColor": "dodgerblue" }}>
                     <h1>You are logged in!</h1>
                     <br />
                     <p>
@@ -55,10 +52,10 @@ const Login = () => {
                     </p>
                 </section>
             ) : (
-                    <section style={{ "width": "auto", "marginLeft": "auto", "marginRight": "auto", "backgroundColor": "dodgerblue" }}>
+                    <section className='signin-section' style={{ "width": "auto", "marginLeft": "auto", "marginRight": "auto", "backgroundColor": "dodgerblue" }}>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                     <h1>Sign In</h1>
-                    <form onSubmit={handleSubmit}>
+                    <form className='signin-form' onSubmit={handleSubmit}>
                         <label htmlFor="username">Username:</label>
                         <input
                             type="text"
@@ -78,13 +75,12 @@ const Login = () => {
                             value={pwd}
                             required
                         />
-                        <button>Sign In</button>
+                        <button className='signin-button'>Sign In</button>
                     </form>
                     <p>
                         Need an Account?<br />
                         <span className="line">
-                           
-                            <a href="/SignIn">Sign Up</a>
+                           <Link to='/signin'>Register</Link>
                         </span>
                     </p>
                 </section>

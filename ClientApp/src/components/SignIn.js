@@ -3,6 +3,7 @@ import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import './SignIn.css';
 import { register } from "../services/Auth";
+import { Link } from "react-router-dom";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -72,17 +73,17 @@ const Register = () => {
         <>
             
             {success ? (
-                <section style={{"width":"auto","marginLeft":"auto","marginRight":"auto", "backgroundColor":"dodgerblue"}}>
+                <section className="signin-section" style={{"width":"auto","marginLeft":"auto","marginRight":"auto", "backgroundColor":"dodgerblue"}}>
                     <h1>Success!</h1>
                     <p>
                         <a href="#">Sign In</a>
                     </p>
                 </section>
             ) : (
-                <section style={{"width":"auto","marginLeft":"auto","marginRight":"auto", "backgroundColor":"dodgerblue"}}>
+                <section className="signin-section" style={{"width":"auto","marginLeft":"auto","marginRight":"auto", "backgroundColor":"dodgerblue"}}>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                     <h1>Register</h1>
-                    <form onSubmit={handleSubmit}>
+                    <form className="signin-form" onSubmit={handleSubmit}>
                         <label htmlFor="username">
                             Username:
                             <FontAwesomeIcon icon={faCheck} className={validName ? "valid" : "hide"} />
@@ -154,13 +155,13 @@ const Register = () => {
                             Must match the first password input field.
                         </p>
 
-                        <button disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
+                        <button className="signin-button" disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
                     </form>
                     <p>
                         Already registered?<br />
                         <span className="line">
                             {/*put router link here*/}
-                            <a href="/LogIn">Sign In</a>
+                            <Link to='/login'>Sign in</Link>
                         </span>
                     </p>
                         </section>
