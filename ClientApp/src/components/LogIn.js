@@ -1,13 +1,10 @@
 ﻿import { useRef, useState, useEffect, useContext } from 'react';
-import AuthContext from "../services/LogAuth";
 import { login } from "../services/Auth";
 import './SignIn.css';
 import { Link } from 'react-router-dom';
-//import axios from './api/axios';
-//const LOGIN_URL = '/auth';
+import { Layout } from './Layout';
 
 const Login = () => {
-    const { setAuth } = useContext(AuthContext);
     const userRef = useRef();
     const errRef = useRef();
 
@@ -30,7 +27,7 @@ const Login = () => {
         await login(userObj)
             .then(res => {
                 console.log(res.data);
-                //TODO: save token response to local storage
+                localStorage.setItem("token", res.data);
                 setSuccess(true);
                 setUser('');
                 setPwd('');
