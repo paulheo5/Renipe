@@ -7,6 +7,7 @@ import { Button } from './Button';
 import { trackRecipe } from '../services/SavedRecipes';
 import { useNavigate } from 'react-router-dom';
 import NutritionFactsTable from './NutritionFactsTable';
+import {useJwt} from 'react-jwt'
 
 
 const RecipeInfo = () => {
@@ -23,6 +24,8 @@ const RecipeInfo = () => {
     const [servingSize, setServingSize] = useState("")
 
     const navigate = useNavigate();
+    const token = localStorage.getItem("token");
+    const {decodedToken, isExpired} = useJwt(token);
 
 
     
@@ -146,7 +149,11 @@ const RecipeInfo = () => {
           
                     <Button className='btn' buttonStyle='btn--outline2' onClick={() => setHide(!hide)}>Nutrition Info</Button>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <Button  clssName = 'btn' buttonStyle='btn--outline2' onClick={handleSubmit } >Save this</Button>
+                    {(token && !isExpired)?
+                        <Button  className = 'btn' buttonStyle='btn--outline2' onClick={handleSubmit } >Save this</Button>
+                        :
+                        <></>
+                    }
 
                 </div>
                 {hide ?

@@ -4,6 +4,8 @@ import NutritionFacts from './NutritionFacts'
 
 const NutritionFactsTable = ({mealsLocal, meals, setMeals, style, styles, mealView, totalView}) => {
 
+    const token = localStorage.getItem("token");
+
   return (
         <>
         <table className="table table-striped">
@@ -35,7 +37,7 @@ const NutritionFactsTable = ({mealsLocal, meals, setMeals, style, styles, mealVi
                 mealsLocal.map(meal => {
                     return(
                         <React.Fragment key={meal.mealId}>
-                            <NutritionFacts food={meal} mealView={mealView} style={style} meals={meals} setMeals={setMeals} />
+                            <NutritionFacts food={meal} mealView={mealView} style={style} meals={meals} setMeals={setMeals} token={token} />
                         </React.Fragment>
                     )
                 })
@@ -43,7 +45,7 @@ const NutritionFactsTable = ({mealsLocal, meals, setMeals, style, styles, mealVi
                 meals.map(meal => {
                     return (
                         <React.Fragment key={mealView ? meal.mealId : meal.id}>
-                            <NutritionFacts food={meal} mealView={mealView} style={style} meals={meals} setMeals={setMeals} />
+                            <NutritionFacts food={meal} mealView={mealView} style={style} meals={meals} setMeals={setMeals} token={token} />
                         </React.Fragment>
                     )
                 })

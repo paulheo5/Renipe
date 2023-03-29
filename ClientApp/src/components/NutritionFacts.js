@@ -3,9 +3,10 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { trackMeal, updateMeal, deleteMeal } from '../services/Meals'
 import PropTypes from 'prop-types'
+import { useJwt } from 'react-jwt'
 
-const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
-
+const NutritionFacts = ({style, food, mealView, meals, setMeals, token}) => {
+    
     NutritionFacts.propTypes = {
         style: PropTypes.object,
         food: PropTypes.object,
@@ -14,10 +15,10 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
         setMeals: PropTypes.func,
         setMealsList: PropTypes.func,
     }
-
-    const [hide, setHide] = useState(true)
-
     
+    const [hide, setHide] = useState(true)
+    const {decodedToken, isExpired} = useJwt(token)
+
     const initialValues = {
         "mealId" : food.mealId,
         "foodName" : food.foodName,
@@ -111,14 +112,23 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
                 <td style={style}>{meal.servings}</td>
                 <td style={style}>{`${new Date(meal.date).getMonth() + 1}/${new Date(meal.date).getUTCDate()}/${new Date(meal.date).getFullYear()}`}</td>
                 {/* <td style={style}>{new Date(meal.date).toLocaleDateString()}</td> */}
+                {
+                (token && !isExpired)?
                 <td style={{"textAlign":"right"}}>
                     <button className='btn btn-danger text-light'onClick={clickDelete}>Delete</button>
                     <button style={{"marginLeft":"1em"}} className='btn btn-warning text-dark' onClick={() => setHide(!hide)}>Update</button>
                 </td>
+                :
+                <></>
+                }
             </>
             :
             <td>
-                <button className="btn btn-primary" onClick={() => setHide(!hide)}>Track</button>
+                {(token && !isExpired)?
+                    <button className="btn btn-primary" onClick={() => setHide(!hide)}>Track</button>
+                    :
+                    <></>
+                }
             </td>
         }
     </tr>
