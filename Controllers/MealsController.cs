@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
 using Renipe.DataContext;
 using Renipe.Models;
 
@@ -47,30 +49,54 @@ namespace Renipe.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMeal(int id, Meal meal)
         {
+            //Sample code to extract Id from token
+            //JwtSecurityToken jwt = new JwtSecurityToken(token);
+            //string id = jwt.Claims.Single(c => c.Type == ClaimTypes.NameIdentifier).Value;
+
+            var request = Request;
+            var headers = request.Headers;
+
             if (id != meal.MealId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(meal).State = EntityState.Modified;
-
-            try
+            if (headers.ContainsKey("Authorization"))
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MealExists(id))
+                JwtSecurityToken token = new JwtSecurityToken(headers.Authorization);
+                if (token == null)
                 {
-                    return NotFound();
+                    return Unauthorized();
                 }
-                else
+                string userId = token.Claims.Single(c => c.Type == "userId").Value;
+                string username = token.Claims.Single(c => c.Type == "username").Value;
+                if(!_context.Users.Where(u => u.Username == username && u.Id == int.Parse(userId)).Any())
                 {
-                    throw;
+                    return BadRequest();
                 }
-            }
+                _context.Entry(meal).State = EntityState.Modified;
 
-            return NoContent();
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!MealExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return NoContent();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         // POST: api/Meals
