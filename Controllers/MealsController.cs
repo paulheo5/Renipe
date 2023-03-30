@@ -27,21 +27,64 @@ namespace Renipe.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Meal>>> GetNutritionData()
         {
-            return await _context.NutritionData.ToListAsync();
+            var request = Request;
+            var headers = request.Headers;
+
+            if (headers.ContainsKey("Authorization"))
+            {
+                JwtSecurityToken token = new JwtSecurityToken(headers.Authorization);
+                if(token == null)
+                {
+                    return Unauthorized();
+                }
+                string userId = token.Claims.Single(c => c.Type == "userId").Value;
+                string username = token.Claims.Single(c => c.Type == "username").Value;
+                if (!_context.Users.Where(u => u.Username == username && u.Id == int.Parse(userId)).Any())
+                {
+                    return Unauthorized();
+                }
+                return await _context.NutritionData.Where(m => m.UserId == int.Parse(userId)).ToListAsync();
+            }
+            return Unauthorized();
         }
 
         // GET: api/Meals/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Meal>> GetMeal(int id)
         {
-            var meal = await _context.NutritionData.FindAsync(id);
 
-            if (meal == null)
+            var request = Request;
+            var headers = request.Headers;
+
+            if (headers.ContainsKey("Authorization"))
             {
-                return NotFound();
-            }
+                JwtSecurityToken token = new JwtSecurityToken(headers.Authorization);
+                if (token == null)
+                {
+                    return Unauthorized();
+                }
+                string userId = token.Claims.Single(c => c.Type == "userId").Value;
+                string username = token.Claims.Single(c => c.Type == "username").Value;
+                if (!_context.Users.Where(u => u.Username == username && u.Id == int.Parse(userId)).Any())
+                {
+                    return Unauthorized();
+                }
 
-            return meal;
+                var meal = await _context.NutritionData.FindAsync(id);
+
+                if (meal == null)
+                {
+                    return NotFound();
+                }
+
+                if(meal.UserId != int.Parse(userId))
+                {
+                    return Unauthorized();
+                }
+
+                return meal;
+            }
+            return Unauthorized();
         }
 
         // PUT: api/Meals/5
@@ -58,7 +101,7 @@ namespace Renipe.Controllers
 
             if (id != meal.MealId)
             {
-                return BadRequest();
+                return Unauthorized();
             }
 
             if (headers.ContainsKey("Authorization"))
@@ -72,7 +115,7 @@ namespace Renipe.Controllers
                 string username = token.Claims.Single(c => c.Type == "username").Value;
                 if(!_context.Users.Where(u => u.Username == username && u.Id == int.Parse(userId)).Any())
                 {
-                    return BadRequest();
+                    return Unauthorized();
                 }
                 _context.Entry(meal).State = EntityState.Modified;
 
@@ -93,10 +136,7 @@ namespace Renipe.Controllers
                 }
                 return NoContent();
             }
-            else
-            {
-                return BadRequest();
-            }
+                return Unauthorized();
         }
 
         // POST: api/Meals
@@ -104,26 +144,72 @@ namespace Renipe.Controllers
         [HttpPost]
         public async Task<ActionResult<Meal>> PostMeal(Meal meal)
         {
-            _context.NutritionData.Add(meal);
-            await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMeal", new { id = meal.MealId }, meal);
+            var request = Request;
+            var headers = request.Headers;
+
+            if (headers.ContainsKey("Authorization"))
+            {
+                JwtSecurityToken token = new JwtSecurityToken(headers.Authorization);
+                if (token == null)
+                {
+                    return Unauthorized();
+                }
+                string userId = token.Claims.Single(c => c.Type == "userId").Value;
+                string username = token.Claims.Single(c => c.Type == "username").Value;
+                if (!_context.Users.Where(u => u.Username == username && u.Id == int.Parse(userId)).Any())
+                {
+                    return Unauthorized();
+                }
+
+                meal.UserId = int.Parse(userId);
+
+                _context.NutritionData.Add(meal);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction("GetMeal", new { id = meal.MealId }, meal);
+            }
+            return Unauthorized();
         }
 
         // DELETE: api/Meals/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMeal(int id)
         {
-            var meal = await _context.NutritionData.FindAsync(id);
-            if (meal == null)
+            var request = Request;
+            var headers = request.Headers;
+
+            if (headers.ContainsKey("Authorization"))
             {
-                return NotFound();
+                JwtSecurityToken token = new JwtSecurityToken(headers.Authorization);
+                if (token == null)
+                {
+                    return Unauthorized();
+                }
+                string userId = token.Claims.Single(c => c.Type == "userId").Value;
+                string username = token.Claims.Single(c => c.Type == "username").Value;
+                if (!_context.Users.Where(u => u.Username == username && u.Id == int.Parse(userId)).Any())
+                {
+                    return Unauthorized();
+                }
+
+                var meal = await _context.NutritionData.FindAsync(id);
+                if (meal == null)
+                {
+                    return NotFound();
+                }
+
+                if(meal.UserId != int.Parse(userId))
+                {
+                    return BadRequest();
+                }
+
+                _context.NutritionData.Remove(meal);
+                await _context.SaveChangesAsync();
+
+                return NoContent();
             }
-
-            _context.NutritionData.Remove(meal);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return Unauthorized();
         }
 
         private bool MealExists(int id)
