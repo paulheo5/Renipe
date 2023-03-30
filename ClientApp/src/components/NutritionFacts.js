@@ -76,7 +76,7 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals, token}) => {
             })
             .catch(err => console.log(err.response))
         }else{
-        trackMeal(meal)
+        trackMeal(meal, token)
             .then(() => {
                 navigate('/meals')
             })
@@ -87,7 +87,7 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals, token}) => {
     const clickDelete = () => {
         const result = confirm(`Are you sure you want to delete ${meal.servings} ${meal.servings === 1 ? 'serving' : 'servings'} of ${meal.foodName}?`)
         if(result){
-            deleteMeal(meal.mealId)
+            deleteMeal(meal.mealId, token)
             .then(() => {
                 const updatedMeals = meals.filter(m => m.mealId != meal.mealId)
                 setMeals(updatedMeals)
