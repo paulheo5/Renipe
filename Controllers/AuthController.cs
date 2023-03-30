@@ -71,8 +71,10 @@ namespace Renipe.Controllers
             //Information stored in the token
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Username)
+                //new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                //new Claim(ClaimTypes.Name, user.Username)
+                new Claim("userId", user.Id.ToString()),
+                new Claim("username", user.Username)
             };
             //Signature for token security, gets key from appsettings.json
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
