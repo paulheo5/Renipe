@@ -10,7 +10,7 @@ const DailyView = () => {
     const {decodedToken, isExpired} = useJwt(token);
 
     const retrieveMeals = () =>{
-        getMeals()
+        getMeals(token)
         .then(res =>{
           setMeals(res.data)
           console.log(res.data)
