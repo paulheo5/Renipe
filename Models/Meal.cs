@@ -47,6 +47,11 @@ namespace Renipe.Models
         [DisplayName("Date")]
         [System.ComponentModel.DataAnnotations.DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
         public DateTime Date { get; set; }
+        [ForeignKey(nameof(User))]
+        [Column("user_id")]
+        [DisplayName("User Id")]
+        public int UserId { get; set; }
+        public User User { get; set; }
     }
     public static class MealToDisplay
     {
