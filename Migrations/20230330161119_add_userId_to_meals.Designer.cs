@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Renipe.DataContext;
 
@@ -11,9 +12,11 @@ using Renipe.DataContext;
 namespace Renipe.Migrations
 {
     [DbContext(typeof(RenipeDBContext))]
-    partial class RenipeDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230330161119_add_userId_to_meals")]
+    partial class add_userId_to_meals
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
