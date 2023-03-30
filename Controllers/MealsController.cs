@@ -117,6 +117,9 @@ namespace Renipe.Controllers
                 {
                     return Unauthorized();
                 }
+
+                meal.User = _context.Users.Single(u => u.Id == int.Parse(userId));
+
                 _context.Entry(meal).State = EntityState.Modified;
 
                 try
@@ -144,7 +147,6 @@ namespace Renipe.Controllers
         [HttpPost]
         public async Task<ActionResult<Meal>> PostMeal(Meal meal)
         {
-
             var request = Request;
             var headers = request.Headers;
 
@@ -163,6 +165,7 @@ namespace Renipe.Controllers
                 }
 
                 meal.UserId = int.Parse(userId);
+                meal.User = _context.Users.Single(u => u.Id == int.Parse(userId));
 
                 _context.NutritionData.Add(meal);
                 await _context.SaveChangesAsync();
