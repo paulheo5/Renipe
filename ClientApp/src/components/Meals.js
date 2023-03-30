@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { getMeals } from '../services/Meals';
-import {Link} from 'react-router-dom';
-import NutritionFacts from './NutritionFacts';
 import NutritionFactsTable from './NutritionFactsTable';
 import {useJwt} from 'react-jwt';
 
@@ -12,7 +10,7 @@ const Meals = () => {
 
     
     const retrieveMeals = () => {
-        getMeals()
+        getMeals(token)
             .then(res => {
                 setMeals(res.data.sort((a, b) => {
                     if(a.date > b.date){
