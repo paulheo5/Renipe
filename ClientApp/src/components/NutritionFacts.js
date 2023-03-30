@@ -16,11 +16,12 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals, token}) => {
         setMealsList: PropTypes.func,
     }
     
-    const [hide, setHide] = useState(true)
     const {decodedToken, isExpired} = useJwt(token)
+    const [hide, setHide] = useState(true)
 
     const initialValues = {
         "mealId" : food.mealId,
+        "userId" : undefined,
         "foodName" : food.foodName,
         "caloriesPerServing" : Math.round(food.caloriesPerServing),
         "carbohydratesPerServing" : Math.round(food.carbohydratesPerServing),
@@ -66,7 +67,7 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals, token}) => {
     const handleSubmit = (e) => {
         e.preventDefault()
         if(mealView){
-            updateMeal(meal.mealId, meal)
+            updateMeal(meal.mealId, meal, token)
             .then(() => {
                 const updatedMeals = meals.filter(m => m.mealId !== meal.mealId)
                 const AddedBackMeals = [...updatedMeals, meal].sort((a, b) => new Date(b.date) - new Date(a.date))
