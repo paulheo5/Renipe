@@ -51,7 +51,7 @@ namespace Renipe.Models
         [Column("user_id")]
         [DisplayName("User Id")]
         public int UserId { get; set; }
-        public User User { get; set; }
+        public User? User { get; set; }
     }
     public static class MealToDisplay
     {
