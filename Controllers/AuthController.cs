@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Renipe.DataContext;
 using Renipe.Models;
+using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -92,6 +93,29 @@ namespace Renipe.Controllers
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwt;
+        }
+        public static bool ValidateToken(string token, byte[] key, out JwtSecurityToken jwtToken)
+        {
+            JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
+            try
+            {
+                handler.ValidateToken(token, new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                }, out SecurityToken validatedToken);
+                jwtToken = (JwtSecurityToken)validatedToken;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                jwtToken = null;
+                return false;
+            }
         }
     }
 }
