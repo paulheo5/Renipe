@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using NuGet.Protocol;
 using Renipe.DataContext;
 using Renipe.Models;
@@ -17,10 +18,12 @@ namespace Renipe.Controllers
     public class MealsController : ControllerBase
     {
         private readonly RenipeDBContext _context;
+        private readonly IConfiguration _configuration;
 
-        public MealsController(RenipeDBContext context)
+        public MealsController(RenipeDBContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         // GET: api/Meals
@@ -32,18 +35,23 @@ namespace Renipe.Controllers
 
             if (headers.ContainsKey("Authorization"))
             {
-                JwtSecurityToken token = new JwtSecurityToken(headers.Authorization);
+                string tokenString = headers.Authorization;
+                var key = System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("Auth:Token").Value);
+                bool isValidToken = AuthController.ValidateToken(tokenString, key, out JwtSecurityToken token);
                 if(token == null)
                 {
                     return Unauthorized();
                 }
-                string userId = token.Claims.Single(c => c.Type == "userId").Value;
-                string username = token.Claims.Single(c => c.Type == "username").Value;
-                if (!_context.Users.Where(u => u.Username == username && u.Id == int.Parse(userId)).Any())
+                if(isValidToken)
                 {
-                    return Unauthorized();
+                    string userId = token.Claims.Single(c => c.Type == "userId").Value;
+                    string username = token.Claims.Single(c => c.Type == "username").Value;
+                    if (!_context.Users.Where(u => u.Username == username && u.Id == int.Parse(userId)).Any())
+                    {
+                        return Unauthorized();
+                    }
+                    return await _context.NutritionData.Where(m => m.UserId == int.Parse(userId)).ToListAsync();
                 }
-                return await _context.NutritionData.Where(m => m.UserId == int.Parse(userId)).ToListAsync();
             }
             return Unauthorized();
         }
@@ -58,31 +66,36 @@ namespace Renipe.Controllers
 
             if (headers.ContainsKey("Authorization"))
             {
-                JwtSecurityToken token = new JwtSecurityToken(headers.Authorization);
+                string tokenString = headers.Authorization;
+                var key = System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("Auth:Token").Value);
+                bool isValidToken = AuthController.ValidateToken(tokenString, key, out JwtSecurityToken token);
                 if (token == null)
                 {
                     return Unauthorized();
                 }
-                string userId = token.Claims.Single(c => c.Type == "userId").Value;
-                string username = token.Claims.Single(c => c.Type == "username").Value;
-                if (!_context.Users.Where(u => u.Username == username && u.Id == int.Parse(userId)).Any())
+                if (isValidToken)
                 {
-                    return Unauthorized();
+                    string userId = token.Claims.Single(c => c.Type == "userId").Value;
+                    string username = token.Claims.Single(c => c.Type == "username").Value;
+                    if (!_context.Users.Where(u => u.Username == username && u.Id == int.Parse(userId)).Any())
+                    {
+                        return Unauthorized();
+                    }
+
+                    var meal = await _context.NutritionData.FindAsync(id);
+
+                    if (meal == null)
+                    {
+                        return NotFound();
+                    }
+
+                    if (meal.UserId != int.Parse(userId))
+                    {
+                        return Unauthorized();
+                    }
+
+                    return meal;
                 }
-
-                var meal = await _context.NutritionData.FindAsync(id);
-
-                if (meal == null)
-                {
-                    return NotFound();
-                }
-
-                if(meal.UserId != int.Parse(userId))
-                {
-                    return Unauthorized();
-                }
-
-                return meal;
             }
             return Unauthorized();
         }
@@ -106,40 +119,45 @@ namespace Renipe.Controllers
 
             if (headers.ContainsKey("Authorization"))
             {
-                JwtSecurityToken token = new JwtSecurityToken(headers.Authorization);
+                string tokenString = headers.Authorization;
+                var key = System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("Auth:Token").Value);
+                bool isValidToken = AuthController.ValidateToken(tokenString, key, out JwtSecurityToken token);
                 if (token == null)
                 {
                     return Unauthorized();
                 }
-                string userId = token.Claims.Single(c => c.Type == "userId").Value;
-                string username = token.Claims.Single(c => c.Type == "username").Value;
-                if(!_context.Users.Where(u => u.Username == username && u.Id == int.Parse(userId)).Any())
+                if (isValidToken)
                 {
-                    return Unauthorized();
-                }
-
-                meal.User = _context.Users.Single(u => u.Id == int.Parse(userId));
-
-                _context.Entry(meal).State = EntityState.Modified;
-
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MealExists(id))
+                    string userId = token.Claims.Single(c => c.Type == "userId").Value;
+                    string username = token.Claims.Single(c => c.Type == "username").Value;
+                    if(!_context.Users.Where(u => u.Username == username && u.Id == int.Parse(userId)).Any())
                     {
-                        return NotFound();
+                        return Unauthorized();
                     }
-                    else
+
+                    meal.User = _context.Users.Single(u => u.Id == int.Parse(userId));
+
+                    _context.Entry(meal).State = EntityState.Modified;
+
+                    try
                     {
-                        throw;
+                        await _context.SaveChangesAsync();
                     }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!MealExists(id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return NoContent();
                 }
-                return NoContent();
             }
-                return Unauthorized();
+            return Unauthorized();
         }
 
         // POST: api/Meals
@@ -152,25 +170,30 @@ namespace Renipe.Controllers
 
             if (headers.ContainsKey("Authorization"))
             {
-                JwtSecurityToken token = new JwtSecurityToken(headers.Authorization);
+                string tokenString = headers.Authorization;
+                var key = System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("Auth:Token").Value);
+                bool isValidToken = AuthController.ValidateToken(tokenString, key, out JwtSecurityToken token);
                 if (token == null)
                 {
                     return Unauthorized();
                 }
-                string userId = token.Claims.Single(c => c.Type == "userId").Value;
-                string username = token.Claims.Single(c => c.Type == "username").Value;
-                if (!_context.Users.Where(u => u.Username == username && u.Id == int.Parse(userId)).Any())
+                if(isValidToken)
                 {
-                    return Unauthorized();
+                    string userId = token.Claims.Single(c => c.Type == "userId").Value;
+                    string username = token.Claims.Single(c => c.Type == "username").Value;
+                    if (!_context.Users.Where(u => u.Username == username && u.Id == int.Parse(userId)).Any())
+                    {
+                        return Unauthorized();
+                    }
+
+                    meal.UserId = int.Parse(userId);
+                    meal.User = _context.Users.Single(u => u.Id == int.Parse(userId));
+
+                    _context.NutritionData.Add(meal);
+                    await _context.SaveChangesAsync();
+
+                    return CreatedAtAction("GetMeal", new { id = meal.MealId }, meal);
                 }
-
-                meal.UserId = int.Parse(userId);
-                meal.User = _context.Users.Single(u => u.Id == int.Parse(userId));
-
-                _context.NutritionData.Add(meal);
-                await _context.SaveChangesAsync();
-
-                return CreatedAtAction("GetMeal", new { id = meal.MealId }, meal);
             }
             return Unauthorized();
         }
@@ -184,34 +207,39 @@ namespace Renipe.Controllers
 
             if (headers.ContainsKey("Authorization"))
             {
-                JwtSecurityToken token = new JwtSecurityToken(headers.Authorization);
+                string tokenString = headers.Authorization;
+                var key = System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("Auth:Token").Value);
+                bool isValidToken = AuthController.ValidateToken(tokenString, key, out JwtSecurityToken token);
                 if (token == null)
                 {
                     return Unauthorized();
                 }
-                string userId = token.Claims.Single(c => c.Type == "userId").Value;
-                string username = token.Claims.Single(c => c.Type == "username").Value;
-                if (!_context.Users.Where(u => u.Username == username && u.Id == int.Parse(userId)).Any())
+                if (isValidToken)
                 {
-                    return Unauthorized();
+                    string userId = token.Claims.Single(c => c.Type == "userId").Value;
+                    string username = token.Claims.Single(c => c.Type == "username").Value;
+                    if (!_context.Users.Where(u => u.Username == username && u.Id == int.Parse(userId)).Any())
+                    {
+                        return Unauthorized();
+                    }
+
+                    var meal = await _context.NutritionData.FindAsync(id);
+                    if (meal == null)
+                    {
+                        return NotFound();
+                    }
+
+                    if (meal.UserId != int.Parse(userId))
+                    {
+                        return BadRequest();
+                    }
+
+                    _context.NutritionData.Remove(meal);
+                    await _context.SaveChangesAsync();
+
+                    return NoContent();
                 }
-
-                var meal = await _context.NutritionData.FindAsync(id);
-                if (meal == null)
-                {
-                    return NotFound();
-                }
-
-                if(meal.UserId != int.Parse(userId))
-                {
-                    return BadRequest();
-                }
-
-                _context.NutritionData.Remove(meal);
-                await _context.SaveChangesAsync();
-
-                return NoContent();
-            }
+        }
             return Unauthorized();
         }
 
