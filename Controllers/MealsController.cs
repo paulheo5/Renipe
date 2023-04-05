@@ -90,10 +90,6 @@ namespace Renipe.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMeal(int id, Meal meal)
         {
-            //Sample code to extract Id from token
-            //JwtSecurityToken jwt = new JwtSecurityToken(token);
-            //string id = jwt.Claims.Single(c => c.Type == ClaimTypes.NameIdentifier).Value;
-
             var request = Request;
             var headers = request.Headers;
 
@@ -105,11 +101,17 @@ namespace Renipe.Controllers
                     return Unauthorized();
                 }
 
-                meal.User = _context.Users.Single(u => u.Id == userId);
+                if(meal.UserId != userId)
+                {
+                    return BadRequest();
+                }
+
+                meal.User = _context.Users.SingleOrDefault(u => u.Id == userId);
                 if (meal.User == null)
                 {
                     return BadRequest("No user for meal");
                 }
+
                 _context.Entry(meal).State = EntityState.Modified;
                 try
                 {
