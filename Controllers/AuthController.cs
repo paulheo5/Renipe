@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Renipe.DataContext;
 using Renipe.Models;
+using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -40,7 +41,7 @@ namespace Renipe.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return Ok(user);
+            return Ok(userDto);
         }
 
         [HttpPost("login")]
@@ -71,8 +72,10 @@ namespace Renipe.Controllers
             //Information stored in the token
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Username)
+                //new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                //new Claim(ClaimTypes.Name, user.Username)
+                new Claim("userId", user.Id.ToString()),
+                new Claim("username", user.Username)
             };
             //Signature for token security, gets key from appsettings.json
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
@@ -90,6 +93,29 @@ namespace Renipe.Controllers
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwt;
+        }
+        public static bool ValidateToken(string token, byte[] key, out JwtSecurityToken jwtToken)
+        {
+            JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
+            try
+            {
+                handler.ValidateToken(token, new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                }, out SecurityToken validatedToken);
+                jwtToken = (JwtSecurityToken)validatedToken;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                jwtToken = null;
+                return false;
+            }
         }
     }
 }

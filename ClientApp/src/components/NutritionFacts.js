@@ -3,9 +3,10 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { trackMeal, updateMeal, deleteMeal } from '../services/Meals'
 import PropTypes from 'prop-types'
+import { useJwt } from 'react-jwt'
 
-const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
-
+const NutritionFacts = ({style, food, mealView, meals, setMeals, token}) => {
+    
     NutritionFacts.propTypes = {
         style: PropTypes.object,
         food: PropTypes.object,
@@ -14,12 +15,13 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
         setMeals: PropTypes.func,
         setMealsList: PropTypes.func,
     }
-
+    
+    const {decodedToken, isExpired} = useJwt(token)
     const [hide, setHide] = useState(true)
 
-    
     const initialValues = {
         "mealId" : food.mealId,
+        "userId" : undefined,
         "foodName" : food.foodName,
         "caloriesPerServing" : Math.round(food.caloriesPerServing),
         "carbohydratesPerServing" : Math.round(food.carbohydratesPerServing),
@@ -65,7 +67,7 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
     const handleSubmit = (e) => {
         e.preventDefault()
         if(mealView){
-            updateMeal(meal.mealId, meal)
+            updateMeal(meal.mealId, meal, token)
             .then(() => {
                 const updatedMeals = meals.filter(m => m.mealId !== meal.mealId)
                 const AddedBackMeals = [...updatedMeals, meal].sort((a, b) => new Date(b.date) - new Date(a.date))
@@ -74,7 +76,7 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
             })
             .catch(err => console.log(err.response))
         }else{
-        trackMeal(meal)
+        trackMeal(meal, token)
             .then(() => {
                 navigate('/meals')
             })
@@ -85,7 +87,7 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
     const clickDelete = () => {
         const result = confirm(`Are you sure you want to delete ${meal.servings} ${meal.servings === 1 ? 'serving' : 'servings'} of ${meal.foodName}?`)
         if(result){
-            deleteMeal(meal.mealId)
+            deleteMeal(meal.mealId, token)
             .then(() => {
                 const updatedMeals = meals.filter(m => m.mealId != meal.mealId)
                 setMeals(updatedMeals)
@@ -111,14 +113,23 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals}) => {
                 <td style={style}>{meal.servings}</td>
                 <td style={style}>{`${new Date(meal.date).getMonth() + 1}/${new Date(meal.date).getUTCDate()}/${new Date(meal.date).getFullYear()}`}</td>
                 {/* <td style={style}>{new Date(meal.date).toLocaleDateString()}</td> */}
-                <td style={{"width":"14em"}}>
+                {
+                (token && !isExpired)?
+                <td style={{"textAlign":"right"}}>
                     <button className='btn btn-danger text-light'onClick={clickDelete}>Delete</button>
                     <button style={{"marginLeft":"1em"}} className='btn btn-warning text-dark' onClick={() => setHide(!hide)}>Update</button>
                 </td>
+                :
+                <></>
+                }
             </>
             :
             <td>
-                <button className="btn btn-primary" onClick={() => setHide(!hide)}>Track</button>
+                {(token && !isExpired)?
+                    <button className="btn btn-primary" onClick={() => setHide(!hide)}>Track</button>
+                    :
+                    <></>
+                }
             </td>
         }
     </tr>

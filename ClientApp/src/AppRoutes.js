@@ -7,6 +7,8 @@ import SearchRecipe from "./components/SearchRecipe";
 import RecipeInfo from "./components/RecipeInfo"
 import DailyView from "./components/DailyView";
 import Saved from "./components/SavedRecipes";
+import Register from "./components/SignIn";
+import Login from "./components/LogIn";
 
 
 const AppRoutes = [
@@ -44,6 +46,14 @@ const AppRoutes = [
       {
         path: '/SavedRecipes',
         element: <Saved />
+    },
+    {
+        path: '/SignIn',
+        element: <Register />
+    },
+    {
+        path: '/LogIn',
+        element: <Login />
     }
 
 ];

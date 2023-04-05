@@ -1,13 +1,16 @@
 import React, {useState, useEffect} from 'react'
 import { getMeals } from '../services/Meals'
 import DailyTotal from './DailyTotal'
+import{useJwt} from 'react-jwt'
 
 const DailyView = () => {
     const [meals, setMeals] = useState([])
     const [dates, setDates] = useState([])
+    const token = localStorage.getItem("token");
+    const {decodedToken, isExpired} = useJwt(token);
 
     const retrieveMeals = () =>{
-        getMeals()
+        getMeals(token)
         .then(res =>{
           setMeals(res.data)
           console.log(res.data)
@@ -18,12 +21,16 @@ const DailyView = () => {
     }
 
     useEffect(() => {
-      retrieveMeals()
+        if(token && !isExpired){
+            retrieveMeals()
+        }
     },[])
 
     useEffect(() => {
-        const updatedDates = meals.sort((a, b) => new Date(b.date) - new Date(a.date)).map(m => new Date(m.date).toLocaleDateString())
-        setDates([...new Set(updatedDates)])
+        if(token && !isExpired){
+            const updatedDates = meals.sort((a, b) => new Date(b.date) - new Date(a.date)).map(m => new Date(m.date).toLocaleDateString())
+            setDates([...new Set(updatedDates)])
+        }
     },[meals])
 
     const mealsByDate = dates.map(d => meals.filter(m => (new Date(m.date).toLocaleDateString()) === d))
@@ -33,7 +40,8 @@ const DailyView = () => {
     
   return (
     <div>
-        <table className='table table-striped'>
+        {(token && !isExpired)?
+            <table className='table table-striped'>
             <thead>
                 <tr className='bg-dark'>
                     <th style={style} className='text-light'>Date</th>
@@ -50,13 +58,19 @@ const DailyView = () => {
             <tbody>
                 {mealsByDate.filter(m => m.length > 0).map(d =>{
                     return(
-                    <React.Fragment key={d[0].date}>
-                        <DailyTotal style={style} meals={d} mealsList={meals} setMealsList={setMeals} />
+                        <React.Fragment key={d[0].date}>
+                        <DailyTotal style={style} meals={d} mealsList={meals} setMealsList={setMeals} token={token} />
                     </React.Fragment>
                     )
                 })}
             </tbody>
         </table>
+        :
+        <>
+            <h3 style={{"paddingLeft":"5%"}}>Unauthorized</h3>
+            <p style={{"paddingLeft":"5%"}}>Please login for daily view.</p>
+        </>
+        }
     </div>
   )
 }

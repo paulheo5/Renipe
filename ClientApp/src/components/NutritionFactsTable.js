@@ -2,35 +2,34 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import NutritionFacts from './NutritionFacts'
 
-const NutritionFactsTable = ({mealsLocal, meals, setMeals, style, mealView, totalView}) => {
+const NutritionFactsTable = ({mealsLocal, meals, setMeals, style, styles, mealView, totalView}) => {
+
+    const token = localStorage.getItem("token");
+
   return (
         <>
         <table className="table table-striped">
             <thead>
                 <tr className='bg-dark'>
-                    {totalView ?
-                    <th className='text-light' style={{...style,"width":"16.5em"}}></th>
-                    :
-                    <th className='text-light' style={style}>Name</th>
-                    }
-                    <th className='text-light' style={style}>Calories</th>
-                    <th className='text-light' style={style}>Carbohydrates</th>
-                    <th className='text-light' style={style}>Protein</th>
-                    <th className='text-light' style={style}>Fat</th>
-                    <th className='text-light' style={style}>Phosphorus</th>
-                    <th className='text-light' style={style}>Potassium</th>
-                    <th className='text-light' style={style}>Sodium</th>
-                    <th className='text-light' style={{...style, 'width':'8em'}}>Serving Size</th>
-                    <th className='text-light' style={{...style, 'width':'8em'}}>Serving Unit</th>
+                    <th className='text-light' style={totalView? styles[0] : {...style, "width":"18%"}}>Name</th>
+                    <th className='text-light' style={totalView? styles[1] : style}>Calories</th>
+                    <th className='text-light' style={totalView? styles[2] : style}>Carbohydrates</th>
+                    <th className='text-light' style={totalView? styles[3] : style}>Protein</th>
+                    <th className='text-light' style={totalView? styles[4] : style}>Fat</th>
+                    <th className='text-light' style={totalView? styles[5] : style}>Phosphorus</th>
+                    <th className='text-light' style={totalView? styles[6] : style}>Potassium</th>
+                    <th className='text-light' style={totalView? styles[7] : style}>Sodium</th>
+                    <th className='text-light' style={{...style, 'width':'5%'}}>Serving Size</th>
+                    <th className='text-light' style={{...style, 'width':'5%'}}>Serving Unit</th>
                     {mealView ?
                     <>
-                    <th className='text-light' style={style}>Servings</th>
-                    <th className='text-light' style={style}>Date</th>
+                    <th className='text-light' style={{...style, "width":"5%"}}>Servings</th>
+                    <th className='text-light' style={{...style, "width":"5%"}}>Date</th>
                     </>
                     :
                     <></>
                     }
-                    <th className='text-light' ></th>
+                    <th className='text-light'></th>
                 </tr>
             </thead>
             <tbody>
@@ -38,7 +37,7 @@ const NutritionFactsTable = ({mealsLocal, meals, setMeals, style, mealView, tota
                 mealsLocal.map(meal => {
                     return(
                         <React.Fragment key={meal.mealId}>
-                            <NutritionFacts food={meal} mealView={mealView} style={style} meals={meals} setMeals={setMeals} />
+                            <NutritionFacts food={meal} mealView={mealView} style={style} meals={meals} setMeals={setMeals} token={token} />
                         </React.Fragment>
                     )
                 })
@@ -46,7 +45,7 @@ const NutritionFactsTable = ({mealsLocal, meals, setMeals, style, mealView, tota
                 meals.map(meal => {
                     return (
                         <React.Fragment key={mealView ? meal.mealId : meal.id}>
-                            <NutritionFacts food={meal} mealView={mealView} style={style} meals={meals} setMeals={setMeals} />
+                            <NutritionFacts food={meal} mealView={mealView} style={style} meals={meals} setMeals={setMeals} token={token} />
                         </React.Fragment>
                     )
                 })

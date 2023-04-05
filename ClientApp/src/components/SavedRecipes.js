@@ -2,10 +2,13 @@
 import { getRecipe } from '../services/SavedRecipes';
 import { deleteRecipe } from '../services/SavedRecipes';
 import { useNavigate } from 'react-router-dom';
+import {useJwt} from 'react-jwt';
 
 
 const Saved = () => {
     const [recipe, setRecipe] = useState([]);
+    const token = localStorage.getItem("token");
+    const {decodedToken, isExpired} = useJwt(token);
 
     const [hide, setHide] = useState(true);
 
@@ -18,7 +21,9 @@ const Saved = () => {
     }
 
     useEffect(() => {
-        savedRecipe()
+        if(token && !isExpired){
+            savedRecipe()
+        }
     }, [])
 
     const navigate = useNavigate();
@@ -26,6 +31,7 @@ const Saved = () => {
     const style = { "padding": "3px", "paddingLeft": "10px", "paddingRight": "10px" }
     return (
         <>
+        {(token && !isExpired)?
             <table className="table table-striped">
                 <thead>
                     <tr className='bg-dark'>
@@ -49,7 +55,7 @@ const Saved = () => {
                                         navigate("/RecipeInfo")
                                     }}>Details</button>
                                         <button style={{"marginLeft":"1em"}}  className='btn btn-danger text-light' onClick={() => {
-                                        const result = confirm(`Are you sure you want to delete ${recipes.title}?`)
+                                            const result = confirm(`Are you sure you want to delete ${recipes.title}?`)
                                         const updatedRecipeList = recipe.filter(r => r.id !== recipes.id)
                                         if (result) {
                                             deleteRecipe(recipes.id)
@@ -71,7 +77,12 @@ const Saved = () => {
                     )
           })}
             </table>
-
+        :
+        <>
+            <h3 style={{"paddingLeft":"5%"}}>Unauthorized</h3>
+            <p style={{"paddingLeft":"5%"}}>Please login to see saved recipes.</p>
+        </>
+        }
         </>
     )
 

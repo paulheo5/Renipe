@@ -14,23 +14,58 @@ const DailyTotal = ({meals, mealsList, setMealsList, style}) => {
     const totalSodium = meals.map(m => Math.round(m.sodiumPerServing * m.servings)).reduce(((a, b) => a + b), 0)
     const [hide, setHide] = useState(true)
 
+    const styles = [
+      {
+          ...style,
+          "width":"18%"
+      },
+      {
+          ...style,
+          "width":"5%"
+      },
+      {
+        ...style,
+        "width":"7.5%"
+      },
+      {
+        ...style,
+        "width":"5%"
+      },
+      {
+        ...style,
+        "width":"4%"
+      },
+      {
+        ...style,
+        "width":"5%"
+      },
+      {
+        ...style,
+        "width":"5%"
+      },
+      {
+        ...style,
+        "width":"5%"
+      }
+  ]
+
   return (
     <>
       <tr>
-        <td style={{...style, "width":"17em"}} >{date}</td>
-        <td style={{...style, "width":"7.5em"}} >{totalCalories}</td>
-        <td style={{...style, "width":"11.5em"}} >{totalCarbohydrates}g</td>
-        <td style={{...style, "width":"6.5em"}} >{totalProtein}g</td>
-        <td style={{...style, "width":"4.5em"}} >{totalFat}g</td>
-        <td style={{...style, "width":"10em"}} className={totalPhosphorus > 800 ? "text-danger" : ""}>{totalPhosphorus}mg</td>
-        <td style={{...style, "width":"8.5em"}} className={totalPotassium > 3000 ? "text-danger" : ""} >{totalPotassium}mg</td>
-        <td style={style} className={totalSodium > 3000 ? "text-danger" : ""}>{totalSodium}mg</td>
-        <td><button className='btn btn-primary' onClick={() => setHide(!hide)}>Details</button></td>
+        <td style={styles[0]}>{date}</td>
+        <td style={styles[1]}>{totalCalories}</td>
+        <td style={styles[2]}>{totalCarbohydrates}g</td>
+        <td style={styles[3]}>{totalProtein}g</td>
+        <td style={styles[4]}>{totalFat}g</td>
+        <td style={styles[5]} className={totalPhosphorus > 800 ? "text-danger" : ""}>{totalPhosphorus}mg</td>
+        <td style={styles[6]} className={totalPotassium > 3000 ? "text-danger" : ""}>{totalPotassium}mg</td>
+        <td style={styles[7]} className={totalSodium > 3000 ? "text-danger" : ""}>{totalSodium}mg</td>
+        <td style={{"textAlign":"right"}}><button style={{"marginRight":"7em"}} className='btn btn-primary' onClick={() => setHide(!hide)}>Details</button></td>
       </tr>
         {!hide ?
         <tr>
           <td colSpan={9}>
-            <NutritionFactsTable mealsLocal={meals} meals={mealsList} setMeals={setMealsList} totalView={true} mealView={true} style={style} />
+            <NutritionFactsTable mealsLocal={meals} meals={mealsList} setMeals={setMealsList} totalView={true} mealView={true} style={style} styles={styles} />
           </td>
         </tr>
         :
