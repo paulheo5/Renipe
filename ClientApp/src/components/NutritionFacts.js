@@ -21,7 +21,7 @@ const NutritionFacts = ({style, food, mealView, meals, setMeals, token}) => {
 
     const initialValues = {
         "mealId" : food.mealId,
-        "userId" : undefined,
+        "userId" : food.userId ?? undefined,
         "foodName" : food.foodName,
         "caloriesPerServing" : Math.round(food.caloriesPerServing),
         "carbohydratesPerServing" : Math.round(food.carbohydratesPerServing),

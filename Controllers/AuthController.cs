@@ -117,5 +117,44 @@ namespace Renipe.Controllers
                 return false;
             }
         }
+        public static void GetTokenFromHeader(
+            IHeaderDictionary headers,
+            byte[] key,
+            out JwtSecurityToken token,
+            out bool isValidToken,
+            out int userId,
+            out string username)
+        {
+            try
+            {
+                if (headers.ContainsKey("Authorization")){
+                    string tokenString = headers.Authorization;
+                    isValidToken = ValidateToken(tokenString, key, out token);
+                    if (isValidToken)
+                    {
+                        userId = int.Parse(token.Claims.Single(c => c.Type == "userId").Value);
+                        username = token.Claims.Single(c => c.Type == "username").Value;
+                    }
+                    else
+                    {
+                        throw new Exception("Invalid Token");
+                    }
+                    return;
+                }
+                else
+                {
+                    throw new Exception("No Authorization");
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                token = null;
+                isValidToken = false;
+                userId = -1;
+                username = null;
+                throw;
+            }
+        }
     }
 }

@@ -57,7 +57,7 @@ const RecipeInfo = () => {
             "image": info.image
         }
         console.log(savedRecipe)
-        trackRecipe(savedRecipe).then(res => {
+        trackRecipe(savedRecipe, token).then(res => {
             console.log(res.data)
             navigate('/SavedRecipes')
         }).catch(err => console.log(err.response))
