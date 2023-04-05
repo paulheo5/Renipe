@@ -39,7 +39,7 @@ namespace Renipe.Controllers
                     return Unauthorized();
                 }
                 //stuff here
-                return await _context.Recipes.ToListAsync();
+                return await _context.Recipes.Where(r => r.UserId == userId).ToListAsync();
             }
             catch(Exception ex){
                 return Unauthorized(ex.Message);
@@ -65,6 +65,11 @@ namespace Renipe.Controllers
                     return NotFound();
                 }
 
+                if(savedRecipe.UserId != userId)
+                {
+                    return Unauthorized();
+                }
+
                 return savedRecipe;
             }
             catch(Exception ex){
@@ -88,6 +93,17 @@ namespace Renipe.Controllers
                 if (id != savedRecipe.ID)
                 {
                     return BadRequest();
+                }
+
+                if(savedRecipe.UserId != userId)
+                {
+                    return BadRequest();
+                }
+
+                savedRecipe.User = _context.Users.SingleOrDefault(u => u.Id == userId);
+                if(savedRecipe.User == null)
+                {
+                    return BadRequest("No user for Recipe");
                 }
 
                 _context.Entry(savedRecipe).State = EntityState.Modified;
@@ -128,6 +144,10 @@ namespace Renipe.Controllers
                     return Unauthorized();
                 }
                 //stuff here
+
+                savedRecipe.UserId = userId;
+                savedRecipe.User = _context.Users.Single(u => u.Id == userId);
+
                 _context.Recipes.Add(savedRecipe);
                 await _context.SaveChangesAsync();
 
@@ -156,6 +176,11 @@ namespace Renipe.Controllers
                 if (savedRecipe == null)
                 {
                     return NotFound();
+                }
+
+                if(savedRecipe.UserId != userId) 
+                {
+                    return BadRequest();
                 }
 
                 _context.Recipes.Remove(savedRecipe);
