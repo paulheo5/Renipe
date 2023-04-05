@@ -110,7 +110,13 @@ namespace Renipe.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("user_id");
+
                     b.HasKey("ID");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("saved_recipe");
                 });
@@ -141,6 +147,17 @@ namespace Renipe.Migrations
                 });
 
             modelBuilder.Entity("Renipe.Models.Meal", b =>
+                {
+                    b.HasOne("Renipe.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Renipe.Models.SavedRecipe", b =>
                 {
                     b.HasOne("Renipe.Models.User", "User")
                         .WithMany()
