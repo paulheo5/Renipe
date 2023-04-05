@@ -13,7 +13,7 @@ const Saved = () => {
     const [hide, setHide] = useState(true);
 
     const savedRecipe = () => {
-        getRecipe().then(res => {
+        getRecipe(token).then(res => {
             setRecipe(res.data)
             console.log(res.data)
         })
@@ -58,7 +58,7 @@ const Saved = () => {
                                             const result = confirm(`Are you sure you want to delete ${recipes.title}?`)
                                         const updatedRecipeList = recipe.filter(r => r.id !== recipes.id)
                                         if (result) {
-                                            deleteRecipe(recipes.id)
+                                            deleteRecipe(recipes.id, token)
                                             .then(() => {
                                                 
                                                 setRecipe(updatedRecipeList)
